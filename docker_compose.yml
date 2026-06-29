@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: aion-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: aion-postgres
+    environment:
+      POSTGRES_USER: aion_admin
+      POSTGRES_PASSWORD: bank_secure_password_2026
+      POSTGRES_DB: aion_banking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: aion-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  langfuse:
+    image: langfuse/langfuse:latest
+    container_name: aion-langfuse
+    depends_on:
+      - postgres
+    environment:
+      - NODE_ENV=production
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=super_secret_nextauth_key
+      - SALT=super_secret_salt_key
+      - DATABASE_URL=postgresql://aion_admin:bank_secure_password_2026@postgres:5432/aion_banking
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aion-core-app
+    depends_on:
+      - ollama
+      - postgres
+      - langfuse
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DATABASE_URL=postgresql://aion_admin:bank_secure_password_2026@postgres:5432/aion_banking
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - LANGFUSE_PUBLIC_KEY=pk-lf-shared-key
+      - LANGFUSE_SECRET_KEY=sk-lf-shared-key
+      - LANGFUSE_HOST=http://langfuse:3000
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  postgres_data:
+  qdrant_data:
