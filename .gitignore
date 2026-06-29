@@ -1,0 +1,58 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-data/
+
+# Logs and temp
+*.log
+logs/
+tmp/
+.cache/
+
+# Model artifacts (pulled locally by Ollama)
+models/
+
+# Evaluation outputs
+evaluation/results/
+promptfoo/output/
+
+# Streamlit
+.streamlit/secrets.toml
