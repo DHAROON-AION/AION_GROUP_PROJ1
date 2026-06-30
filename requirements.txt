@@ -6,3 +6,4 @@ ollama
 psycopg2-binary
 qdrant-client
 langfuse
+langchain-ollama
