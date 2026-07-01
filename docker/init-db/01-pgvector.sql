@@ -8,7 +8,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE SCHEMA IF NOT EXISTS bank_knowledge;  
 CREATE SCHEMA IF NOT EXISTS bank_operations; 
-CREATE SCHEMA IF NOT EXISTS agent_memory;    =
+CREATE SCHEMA IF NOT EXISTS agent_memory;    
 
 
 CREATE ROLE aion_reader WITH LOGIN PASSWORD 'reader_secure_password_2026';
