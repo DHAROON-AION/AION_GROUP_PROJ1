@@ -3,11 +3,13 @@
 import logging
 from contextlib import contextmanager
 from typing import Any, Generator
-
 import psycopg2
 from psycopg2.extensions import connection as PgConnection
-
 from backend.core.config import get_settings
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime
+from sqlalchemy.orm import sessionmaker, declarative_base
+from backend.core.config import settings
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -81,3 +83,32 @@ def init_database() -> None:
     except Exception as exc:
         logger.error("Database initialization failed: %s", exc)
         raise
+#DANIYAAL CHANGES
+
+
+engine = create_engine(settings.DATABASE_URL, echo=False)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+
+class InvoiceRecord(Base):
+    __tablename__ = "extracted_invoices"
+
+    id = Column(Integer, primary_key=True, index=True)
+    vendor_name = Column(String, index=True)
+    amount = Column(Float)
+    vat = Column(Float)
+    invoice_date = Column(DateTime, default=datetime.utcnow)
+    raw_extracted_json = Column(String) # Store the raw extraction for auditability
+
+def init_db():
+    """Creates all tables defined in Base."""
+    Base.metadata.create_all(bind=engine)
+
+def get_db():
+    """Dependency for FastAPI endpoints."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
