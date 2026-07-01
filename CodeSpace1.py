@@ -8,7 +8,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # --- 1. Connect to the local model ---
 llm = ChatOllama(
-    model="llama3",
+    model="qwen2.5:1.5b",
     temperature=0,
 )
 
