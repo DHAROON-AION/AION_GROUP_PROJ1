@@ -54,3 +54,19 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     """Return cached settings instance (singleton per process)."""
     return Settings()
+
+class Settings(BaseSettings):
+    
+    DATABASE_URL: str
+    
+    
+    OLLAMA_BASE_URL: str
+    OLLAMA_DEFAULT_MODEL: str
+    
+   
+    EMBEDDING_MODEL: str
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+
+settings = Settings()
