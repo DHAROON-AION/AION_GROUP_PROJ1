@@ -1,4 +1,4 @@
-from ingest import load_text, chunk_text
+from ingest import load_documents
 from embed import generate_embeddings
 
 import sys
@@ -9,17 +9,28 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from database.qdrant import create_collection, upload_embeddings
 
-from pathlib import Path
 
-current_dir = Path(__file__).parent
-sample_file = current_dir / "sample.txt"
+def main():
+    print("=" * 60)
+    print("AION RAG Pipeline")
+    print("=" * 60)
 
-document = load_text(sample_file)
+    # Step 1: Load all documents
+    documents = load_documents()
+    print(f"Loaded {len(documents)} documents.")
 
-chunks = chunk_text(document)
+    # Step 2: Generate embeddings
+    embedded_chunks = generate_embeddings(documents)
+    print(f"Generated {len(embedded_chunks)} embeddings.")
 
-embeddings = generate_embeddings(chunks)
+    # Step 3: Create collection (if needed)
+    create_collection()
 
-create_collection()
+    # Step 4: Upload to Qdrant
+    upload_embeddings(embedded_chunks)
 
-upload_embeddings(chunks, embeddings)
+    print("\nPipeline completed successfully.")
+
+
+if __name__ == "__main__":
+    main()

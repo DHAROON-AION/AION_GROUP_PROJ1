@@ -1,12 +1,41 @@
 from pathlib import Path
 
-from langchain_text_splitters import RecursiveCharacterTextSplitter # type: ignore
+from langchain_text_splitters import RecursiveCharacterTextSplitter  # type: ignore
 
 
-def load_text(file_path):
+DOCUMENTS_DIR = Path("documents")
 
-    with open(str(file_path), "r", encoding="utf-8") as f:
-        return f.read()
+
+def load_documents(documents_dir=DOCUMENTS_DIR):
+    """
+    Load every .txt document from the documents directory.
+
+    Returns:
+        [
+            {
+                "filename": "...",
+                "category": "...",
+                "text": "..."
+            },
+            ...
+        ]
+    """
+
+    documents = []
+
+    for file_path in documents_dir.rglob("*.txt"):
+
+        with open(file_path, "r", encoding="utf-8") as f:
+
+            documents.append(
+                {
+                    "filename": file_path.name,
+                    "category": file_path.parent.name,
+                    "text": f.read()
+                }
+            )
+
+    return documents
 
 
 def chunk_text(text: str):
@@ -20,24 +49,26 @@ def chunk_text(text: str):
         separators=["\n\n", "\n", " ", ""]
     )
 
-    chunks = splitter.split_text(text)
-
-    return chunks
+    return splitter.split_text(text)
 
 
 if __name__ == "__main__":
 
-    document = load_text("sample.txt")
+    documents = load_documents()
 
-    chunks = chunk_text(document)
+    print(f"\nLoaded {len(documents)} documents.\n")
 
-    print(f"\nTotal Chunks: {len(chunks)}\n")
+    for document in documents:
 
-    for index, chunk in enumerate(chunks, start=1):
+        chunks = chunk_text(document["text"])
 
         print("=" * 60)
-        print(f"Chunk {index}")
+        print(f"Document : {document['filename']}")
+        print(f"Category : {document['category']}")
+        print(f"Chunks   : {len(chunks)}")
         print("=" * 60)
 
-        print(chunk)
-        print()
+        for i, chunk in enumerate(chunks, start=1):
+            print(f"\nChunk {i}")
+            print("-" * 40)
+            print(chunk)

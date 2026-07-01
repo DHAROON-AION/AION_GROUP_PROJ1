@@ -10,9 +10,11 @@ COLLECTION_NAME = "banking_documents"
 
 
 def create_collection():
+    """
+    Create the Qdrant collection if it doesn't already exist.
+    """
 
     collections = client.get_collections().collections
-
     names = [collection.name for collection in collections]
 
     if COLLECTION_NAME in names:
@@ -30,24 +32,32 @@ def create_collection():
     print("Collection created successfully!")
 
 
-def upload_embeddings(chunks, embeddings):
+def upload_embeddings(embedded_chunks):
+    """
+    Upload embedded chunks to Qdrant.
+
+    Each embedded chunk contains:
+    - embedding
+    - text
+    - filename
+    - category
+    """
 
     points = []
 
-    for index, (chunk, embedding) in enumerate(zip(chunks, embeddings), start=1):
+    for index, item in enumerate(embedded_chunks, start=1):
 
         points.append(
-
             PointStruct(
                 id=index,
-                vector=embedding,
+                vector=item["embedding"],
                 payload={
-                    "text": chunk,
+                    "text": item["text"],
+                    "filename": item["filename"],
+                    "category": item["category"],
                     "chunk_number": index,
-                    "document": "sample.txt",
                 },
             )
-
         )
 
     client.upsert(
