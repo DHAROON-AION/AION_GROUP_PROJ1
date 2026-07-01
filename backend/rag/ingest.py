@@ -1,18 +1,12 @@
 from pathlib import Path
 
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter # type: ignore
 
 
-def load_text(file_path: str) -> str:
-    """
-    Reads a text file and returns its contents.
-    """
-    path = Path(file_path)
+def load_text(file_path):
 
-    if not path.exists():
-        raise FileNotFoundError(f"File not found: {file_path}")
-
-    return path.read_text(encoding="utf-8")
+    with open(str(file_path), "r", encoding="utf-8") as f:
+        return f.read()
 
 
 def chunk_text(text: str):

@@ -7,3 +7,4 @@ psycopg2-binary
 qdrant-client
 langfuse
 langchain-ollama
+langchain-text-splitters
