@@ -1,0 +1,8 @@
+ABC Bank offers savings accounts, current accounts, home financing,
+personal loans and SME banking.
+
+Customers must complete KYC verification before opening an account.
+
+The minimum balance for a savings account is PKR 5,000.
+
+Debit cards are issued within 5 working days.
