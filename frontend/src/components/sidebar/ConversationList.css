@@ -1,0 +1,31 @@
+.conversation-list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.conversation-list__label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  padding: 0 8px 8px;
+}
+
+.conversation-list__items {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.conversation-list__items::-webkit-scrollbar {
+  width: 4px;
+}
+
+.conversation-list__items::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}

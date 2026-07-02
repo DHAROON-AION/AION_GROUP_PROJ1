@@ -9,19 +9,20 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client \
     curl \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 COPY backend/requirements.txt /app/backend/requirements.txt
 RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 
 COPY backend/ /app/backend/
-COPY docker/entrypoint-backend.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY tests/ /app/tests/
+COPY evaluation/ /app/evaluation/
+COPY documents/ /app/documents/
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \
     CMD curl -f http://localhost:8000/health/live || exit 1
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "until pg_isready -h \"${POSTGRES_HOST:-postgres}\" -p \"${POSTGRES_PORT:-5432}\" -U \"${POSTGRES_USER:-aion_admin}\" -d \"${POSTGRES_DB:-aion_banking}\" > /dev/null 2>&1; do echo 'Waiting for PostgreSQL...'; sleep 2; done; exec uvicorn backend.main:app --host 0.0.0.0 --port 8000"]

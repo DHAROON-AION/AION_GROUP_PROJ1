@@ -1,0 +1,105 @@
+.chat-input {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+}
+
+.chat-input__wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 2px 12px var(--color-shadow);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.chat-input__wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 16px var(--color-shadow-hover);
+}
+
+.chat-input__field {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 8px 4px;
+  max-height: 160px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: transparent;
+}
+
+.chat-input__field::placeholder {
+  color: var(--color-text-muted);
+}
+
+.chat-input__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.chat-input__icon-btn:not(:disabled):hover {
+  color: var(--color-text);
+  background: var(--color-surface-muted);
+}
+
+.chat-input__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+
+.chat-input__send:not(:disabled):hover {
+  background: var(--color-primary-hover);
+}
+
+.chat-input__disclaimer {
+  max-width: 768px;
+  margin: 10px auto 0;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.chat-input__disclaimer strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.chat-input__status {
+  max-width: 768px;
+  margin: 8px auto 0;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.chat-input__status--loading {
+  color: var(--color-primary);
+}
+
+.chat-input__status--error {
+  color: #b42318;
+}

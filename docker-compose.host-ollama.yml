@@ -1,0 +1,19 @@
+# Host Ollama override — fastest GPU path on Windows laptops.
+# 1) Install Ollama from https://ollama.com (uses your GPU natively)
+# 2) Run: ollama pull llama3.2:3b
+# 3) Start stack: docker compose -f docker-compose.yml -f docker-compose.host-ollama.yml up -d
+
+services:
+  ollama:
+    profiles: ["container-ollama"]
+  ollama-init:
+    profiles: ["container-ollama"]
+
+  backend:
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    depends_on:
+      postgres:
+        condition: service_healthy
+      langfuse-web:
+        condition: service_healthy

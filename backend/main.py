@@ -2,7 +2,7 @@
 AION AI Factory — FastAPI Application Entry Point
 
 Architecture position:
-    Streamlit UI → FastAPI → LangGraph Agent → Tools/MCP → Ollama → pgvector → Langfuse
+    React UI → FastAPI → LangGraph Agent → Tools/MCP → Ollama → pgvector → Langfuse
 """
 
 import logging
@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api import chat, health
+from backend.api import chat, documents, health
 from backend.core.config import get_settings
 from backend.database.postgres import init_database
 
@@ -33,6 +33,24 @@ async def lifespan(app: FastAPI):
     try:
         init_database()
         logger.info("PostgreSQL + pgvector ready")
+
+        import asyncio
+        from pathlib import Path
+
+        from backend.rag.ingest import ingest_directory
+
+        docs_dir = Path("/app/documents")
+
+        async def ingest_in_background() -> None:
+            if not docs_dir.exists() or not any(docs_dir.glob("*.md")):
+                return
+            try:
+                results = await asyncio.to_thread(ingest_directory, docs_dir)
+                logger.info("Document ingestion: %s", results)
+            except Exception as exc:
+                logger.error("Background document ingestion failed: %s", exc)
+
+        asyncio.create_task(ingest_in_background())
     except Exception as exc:
         logger.error("Database init failed (will retry on health checks): %s", exc)
 
@@ -62,6 +80,7 @@ def create_app() -> FastAPI:
 
     app.include_router(health.router)
     app.include_router(chat.router, prefix="/api")
+    app.include_router(documents.router, prefix="/api")
 
     @app.get("/")
     async def root():

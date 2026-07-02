@@ -1,0 +1,9 @@
+# GPU override — use with: docker compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+# Requires: NVIDIA GPU + Docker Desktop WSL2 + "Use GPU" enabled in Docker settings.
+
+services:
+  ollama:
+    gpus: all
+    environment:
+      OLLAMA_KEEP_ALIVE: "-1"
+      OLLAMA_NUM_PARALLEL: "2"

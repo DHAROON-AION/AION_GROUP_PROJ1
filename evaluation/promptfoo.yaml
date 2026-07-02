@@ -1,0 +1,33 @@
+# Promptfoo evaluation config for banking assistant
+description: AION Banking Assistant Evaluation
+
+providers:
+  - id: http
+    config:
+      url: http://backend:8000/api/chat/
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        message: "{{prompt}}"
+        agent_framework: langgraph
+      transformResponse: json.reply
+
+prompts:
+  - What is the minimum balance for a personal savings account?
+  - What documents are needed to open a business current account?
+  - Assess credit risk for customer SME-1042 in the retail sector.
+  - What are the foreign transaction fees on credit cards?
+  - How do I report a fraudulent transaction?
+
+tests:
+  - vars:
+      prompt: What is the minimum balance for a personal savings account?
+    assert:
+      - type: contains
+        value: SAR
+  - vars:
+      prompt: What documents are needed to open a business current account?
+    assert:
+      - type: contains
+        value: license

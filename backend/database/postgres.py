@@ -69,7 +69,7 @@ def check_postgres_health() -> dict[str, Any]:
 
 def init_database() -> None:
     """
-    Ensure required extensions exist on application startup.
+    Ensure required extensions and application tables exist on startup.
 
     Called once during backend boot; idempotent via IF NOT EXISTS.
     """
@@ -77,7 +77,35 @@ def init_database() -> None:
         with get_db() as conn:
             with conn.cursor() as cur:
                 cur.execute("CREATE EXTENSION IF NOT EXISTS vector")
-        logger.info("Database extensions initialized")
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS document_chunks (
+                        id TEXT PRIMARY KEY,
+                        source TEXT NOT NULL,
+                        content TEXT NOT NULL,
+                        embedding vector(384),
+                        metadata JSONB DEFAULT '{}'
+                    )
+                """)
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS conversations (
+                        id TEXT PRIMARY KEY,
+                        title TEXT NOT NULL DEFAULT 'New conversation',
+                        created_at TIMESTAMPTZ DEFAULT NOW(),
+                        updated_at TIMESTAMPTZ DEFAULT NOW()
+                    )
+                """)
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS messages (
+                        id TEXT PRIMARY KEY,
+                        conversation_id TEXT REFERENCES conversations(id),
+                        role TEXT NOT NULL,
+                        content TEXT NOT NULL,
+                        sources JSONB DEFAULT '[]',
+                        metadata JSONB DEFAULT '{}',
+                        created_at TIMESTAMPTZ DEFAULT NOW()
+                    )
+                """)
+        logger.info("Database schema initialized")
     except Exception as exc:
         logger.error("Database initialization failed: %s", exc)
         raise

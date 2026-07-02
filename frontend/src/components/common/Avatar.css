@@ -1,0 +1,30 @@
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+
+.avatar--md {
+  width: 36px;
+  height: 36px;
+  font-size: 13px;
+}
+
+.avatar--assistant {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.avatar--user {
+  background: var(--color-primary);
+  color: #fff;
+}

@@ -41,6 +41,9 @@ services:
     container_name: aion-ollama
     ports:
       - "11434:11434"
+    environment:
+      OLLAMA_KEEP_ALIVE: "-1"
+      OLLAMA_NUM_PARALLEL: "2"
     volumes:
       - ollama_data:/root/.ollama
     healthcheck:
@@ -59,9 +62,20 @@ services:
         condition: service_healthy
     environment:
       OLLAMA_DEFAULT_MODEL: ${OLLAMA_DEFAULT_MODEL:-llama3.2:3b}
-    volumes:
-      - ./docker/ollama-init.sh:/init.sh:ro
-    entrypoint: ["/bin/sh", "/init.sh"]
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        MODEL="$${OLLAMA_DEFAULT_MODEL:-llama3.2:3b}"
+        echo "Pulling Ollama model: $${MODEL}"
+        until curl -sf http://ollama:11434/api/tags > /dev/null; do
+          echo "Waiting for Ollama..."
+          sleep 5
+        done
+        curl -sf -X POST http://ollama:11434/api/pull \
+          -H "Content-Type: application/json" \
+          -d "{\"name\": \"$${MODEL}\"}" || echo "Model pull failed - pull manually later."
+        echo "Ollama model init complete."
     restart: "no"
 
   # ---------------------------------------------------------------------------
@@ -120,10 +134,11 @@ services:
     volumes:
       - clickhouse_data:/var/lib/clickhouse
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8123/ping"]
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8123/ping"]
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 20s
     restart: unless-stopped
 
   redis:
@@ -206,7 +221,7 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-aion_nextauth_secret_key_min_32_chars_long}
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/public/health"]
+      test: ["CMD-SHELL", "wget --spider -q \"http://$(hostname):3000/api/public/health\" || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -235,6 +250,7 @@ services:
     volumes:
       - ./backend:/app/backend:ro
       - ./documents:/app/documents
+      - embedding_cache:/root/.cache/huggingface
     restart: unless-stopped
 
   frontend:
@@ -242,19 +258,22 @@ services:
       context: .
       dockerfile: docker/Dockerfile.frontend
     container_name: aion-frontend
-    env_file:
-      - .env
     depends_on:
       backend:
         condition: service_healthy
     ports:
-      - "8501:8501"
-    environment:
-      BACKEND_URL: http://backend:8000
+      - "8501:80"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     restart: unless-stopped
 
 volumes:
   ollama_data:
+  embedding_cache:
   postgres_data:
   langfuse_postgres_data:
   clickhouse_data:
