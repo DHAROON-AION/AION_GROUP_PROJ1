@@ -1,33 +1,64 @@
-from ingest import load_text, chunk_text
+from ingest import load_documents, chunk_text
 
-import ollama # type: ignore
+import ollama  # type: ignore
 
-def generate_embeddings(chunks):
 
-    embeddings = []
+def generate_embeddings(documents):
+    """
+    Generate embeddings for every chunk of every document.
 
-    for chunk in chunks:
+    Returns:
+        [
+            {
+                "embedding": [...],
+                "text": "...",
+                "filename": "...",
+                "category": "..."
+            }
+        ]
+    """
 
-        response = ollama.embeddings(
-            model="nomic-embed-text",
-            prompt=chunk
-        )
+    embedded_chunks = []
 
-        embeddings.append(response["embedding"])
+    for document in documents:
 
-    return embeddings
+        chunks = chunk_text(document["text"])
+
+        for chunk in chunks:
+
+            response = ollama.embeddings(
+                model="nomic-embed-text",
+                prompt=chunk
+            )
+
+            embedded_chunks.append(
+                {
+                    "embedding": response["embedding"],
+                    "text": chunk,
+                    "filename": document["filename"],
+                    "category": document["category"],
+                }
+            )
+
+    return embedded_chunks
 
 
 if __name__ == "__main__":
 
-    document = load_text("sample.txt")
+    documents = load_documents()
 
-    chunks = chunk_text(document)
+    embedded_chunks = generate_embeddings(documents)
 
-    embeddings = generate_embeddings(chunks)
+    print(f"\nGenerated {len(embedded_chunks)} embeddings.\n")
 
-    print(f"\nGenerated {len(embeddings)} embeddings.\n")
+    if embedded_chunks:
 
-    print("First embedding dimension:")
+        print("First embedding dimension:")
+        print(len(embedded_chunks[0]["embedding"]))
 
-    print(len(embeddings[0]))
+        print("\nExample Metadata:")
+        print(f"Filename : {embedded_chunks[0]['filename']}")
+        print(f"Category : {embedded_chunks[0]['category']}")
+
+        print("\nChunk Preview:")
+        print(embedded_chunks[0]["text"][:100], "...")

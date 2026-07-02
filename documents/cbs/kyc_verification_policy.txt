@@ -1,0 +1,36 @@
+Title: KYC Verification Policy
+
+Purpose
+
+Know Your Customer (KYC) is a mandatory process used by AION Bank to verify customer identity and comply with anti-money laundering (AML) and counter financing of terrorism (CFT) regulations.
+
+Required Documents
+
+- Original CNIC
+- Proof of address
+- Recent passport-sized photograph
+- Source of income declaration when required
+
+Verification Process
+
+Customer information is verified using official identification documents and internal compliance procedures. Additional verification may be requested for high-risk customers.
+
+Risk Classification
+
+Customers are classified into Low, Medium, or High risk categories based on occupation, transaction profile, and regulatory requirements.
+
+Compliance
+
+No account may be activated until KYC verification has been successfully completed. The bank performs periodic reviews to ensure customer information remains accurate and up to date.
+
+Incomplete KYC
+
+Accounts with incomplete KYC documentation may experience restrictions including transaction limits, temporary suspension, or closure if required documentation is not provided within the specified period.
+
+Customer Responsibility
+
+Customers are responsible for informing AION Bank of any changes to their personal information, address, employment status, or identification documents.
+
+Notes
+
+This policy complies with the Know Your Customer and Anti-Money Laundering regulations issued by the State Bank of Pakistan.

@@ -1,6 +1,41 @@
-version: '3.8'
+# =============================================================================
+# AION AI Factory — Docker Compose (Phase 1)
+# Start entire platform: docker compose up --build
+# =============================================================================
+
+x-langfuse-env: &langfuse-env
+  DATABASE_URL: postgresql://${LANGFUSE_POSTGRES_USER:-langfuse}:${LANGFUSE_POSTGRES_PASSWORD:-langfuse_secure_password_2026}@langfuse-postgres:5432/${LANGFUSE_POSTGRES_DB:-langfuse}
+  SALT: ${LANGFUSE_SALT:-aion_langfuse_salt_key_2026}
+  ENCRYPTION_KEY: ${LANGFUSE_ENCRYPTION_KEY:-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef}
+  TELEMETRY_ENABLED: "false"
+  LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "false"
+  CLICKHOUSE_MIGRATION_URL: clickhouse://clickhouse:9000
+  CLICKHOUSE_URL: http://clickhouse:8123
+  CLICKHOUSE_USER: ${CLICKHOUSE_USER:-clickhouse}
+  CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhouse_secure_password_2026}
+  CLICKHOUSE_CLUSTER_ENABLED: "false"
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_AUTH: ${REDIS_PASSWORD:-redis_secure_password_2026}
+  LANGFUSE_S3_EVENT_UPLOAD_BUCKET: langfuse
+  LANGFUSE_S3_EVENT_UPLOAD_REGION: auto
+  LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-aion_minio}
+  LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-minio_secure_password_2026}
+  LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT: http://minio:9000
+  LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE: "true"
+  LANGFUSE_S3_EVENT_UPLOAD_PREFIX: events/
+  LANGFUSE_S3_MEDIA_UPLOAD_BUCKET: langfuse
+  LANGFUSE_S3_MEDIA_UPLOAD_REGION: auto
+  LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-aion_minio}
+  LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-minio_secure_password_2026}
+  LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT: http://minio:9000
+  LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE: "true"
+  LANGFUSE_S3_MEDIA_UPLOAD_PREFIX: media/
 
 services:
+  # ---------------------------------------------------------------------------
+  # Local LLM Runtime
+  # ---------------------------------------------------------------------------
   ollama:
     image: ollama/ollama:latest
     container_name: aion-ollama
@@ -8,71 +43,219 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     restart: unless-stopped
 
+  ollama-init:
+    image: curlimages/curl:8.11.1
+    container_name: aion-ollama-init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_DEFAULT_MODEL: ${OLLAMA_DEFAULT_MODEL:-llama3.2:3b}
+    volumes:
+      - ./docker/ollama-init.sh:/init.sh:ro
+    entrypoint: ["/bin/sh", "/init.sh"]
+    restart: "no"
+
+  # ---------------------------------------------------------------------------
+  # Application Database (PostgreSQL + pgvector)
+  # ---------------------------------------------------------------------------
   postgres:
     image: ankane/pgvector:latest
     container_name: aion-postgres
     environment:
-      POSTGRES_USER: aion_admin
-      POSTGRES_PASSWORD: bank_secure_password_2026
-      POSTGRES_DB: aion_banking
+      POSTGRES_USER: ${POSTGRES_USER:-aion_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bank_secure_password_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-aion_banking}
+      TZ: UTC
+      PGTZ: UTC
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aion_admin} -d ${POSTGRES_DB:-aion_banking}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: aion-qdrant
-    ports:
-      - "6333:6333"
-    volumes:
-      - qdrant_data:/qdrant/storage
-    restart: unless-stopped
-
-  langfuse:
-    image: langfuse/langfuse:latest
-    container_name: aion-langfuse
-    depends_on:
-      - postgres
+  # ---------------------------------------------------------------------------
+  # Langfuse Observability Stack (v3 — self-hosted)
+  # ---------------------------------------------------------------------------
+  langfuse-postgres:
+    image: postgres:17-alpine
+    container_name: aion-langfuse-postgres
     environment:
-      - NODE_ENV=production
-      - NEXTAUTH_URL=http://localhost:3000
-      - NEXTAUTH_SECRET=super_secret_nextauth_key
-      - SALT=super_secret_salt_key
-      - DATABASE_URL=postgresql://aion_admin:bank_secure_password_2026@postgres:5432/aion_banking
+      POSTGRES_USER: ${LANGFUSE_POSTGRES_USER:-langfuse}
+      POSTGRES_PASSWORD: ${LANGFUSE_POSTGRES_PASSWORD:-langfuse_secure_password_2026}
+      POSTGRES_DB: ${LANGFUSE_POSTGRES_DB:-langfuse}
+      TZ: UTC
+      PGTZ: UTC
+    volumes:
+      - langfuse_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${LANGFUSE_POSTGRES_USER:-langfuse}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24-alpine
+    container_name: aion-clickhouse
+    user: "101:101"
+    environment:
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-clickhouse}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhouse_secure_password_2026}
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8123/ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: aion-redis
+    command: >
+      redis-server --requirepass ${REDIS_PASSWORD:-redis_secure_password_2026}
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-redis_secure_password_2026}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: aion-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-aion_minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio_secure_password_2026}
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9000/minio/health/live || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: aion-minio-init
+    depends_on:
+      minio:
+        condition: service_started
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 ${MINIO_ROOT_USER:-aion_minio} ${MINIO_ROOT_PASSWORD:-minio_secure_password_2026};
+      mc mb --ignore-existing local/langfuse;
+      exit 0;
+      "
+    restart: "no"
+
+  langfuse-worker:
+    image: langfuse/langfuse-worker:3
+    container_name: aion-langfuse-worker
+    depends_on:
+      langfuse-postgres:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    environment:
+      <<: *langfuse-env
+    restart: unless-stopped
+
+  langfuse-web:
+    image: langfuse/langfuse:3
+    container_name: aion-langfuse-web
+    depends_on:
+      langfuse-postgres:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_started
+      langfuse-worker:
+        condition: service_started
     ports:
       - "3000:3000"
+    environment:
+      <<: *langfuse-env
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-aion_nextauth_secret_key_min_32_chars_long}
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/public/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     restart: unless-stopped
 
-  app:
+  # ---------------------------------------------------------------------------
+  # Application Services
+  # ---------------------------------------------------------------------------
+  backend:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: aion-core-app
+      dockerfile: docker/Dockerfile.backend
+    container_name: aion-backend
+    env_file:
+      - .env
     depends_on:
-      - ollama
-      - postgres
-      - langfuse
+      postgres:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+      langfuse-web:
+        condition: service_healthy
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app/backend:ro
+      - ./documents:/app/documents
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: aion-frontend
+    env_file:
+      - .env
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
       - "8501:8501"
     environment:
-      - PYTHONUNBUFFERED=1
-      - OLLAMA_BASE_URL=http://ollama:11434
-      - DATABASE_URL=postgresql://aion_admin:bank_secure_password_2026@postgres:5432/aion_banking
-      - QDRANT_HOST=qdrant
-      - QDRANT_PORT=6333
-      - LANGFUSE_PUBLIC_KEY=pk-lf-shared-key
-      - LANGFUSE_SECRET_KEY=sk-lf-shared-key
-      - LANGFUSE_HOST=http://langfuse:3000
-    volumes:
-      - .:/app
+      BACKEND_URL: http://backend:8000
     restart: unless-stopped
 
 volumes:
   ollama_data:
   postgres_data:
-  qdrant_data:
+  langfuse_postgres_data:
+  clickhouse_data:
+  minio_data:

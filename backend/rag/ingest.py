@@ -1,12 +1,74 @@
 from pathlib import Path
 
-from langchain_text_splitters import RecursiveCharacterTextSplitter # type: ignore
+from langchain_text_splitters import RecursiveCharacterTextSplitter  # type: ignore
+from pypdf import PdfReader
 
 
-def load_text(file_path):
+DOCUMENTS_DIR = Path("documents")
 
-    with open(str(file_path), "r", encoding="utf-8") as f:
+
+def load_txt(file_path: Path):
+    """Load text from a .txt file."""
+
+    with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
+
+
+def load_pdf(file_path: Path):
+    """Extract text from a PDF."""
+
+    reader = PdfReader(file_path)
+
+    text = ""
+
+    for page in reader.pages:
+        extracted = page.extract_text()
+
+        if extracted:
+            text += extracted + "\n"
+
+    return text
+
+
+def load_documents(documents_dir=DOCUMENTS_DIR):
+    """
+    Load all supported documents (.txt and .pdf).
+
+    Returns:
+        [
+            {
+                "filename": "...",
+                "category": "...",
+                "text": "..."
+            }
+        ]
+    """
+
+    documents = []
+
+    for file_path in documents_dir.rglob("*"):
+
+        if not file_path.is_file():
+            continue
+
+        if file_path.suffix.lower() == ".txt":
+            text = load_txt(file_path)
+
+        elif file_path.suffix.lower() == ".pdf":
+            text = load_pdf(file_path)
+
+        else:
+            continue
+
+        documents.append(
+            {
+                "filename": file_path.name,
+                "category": file_path.parent.name,
+                "text": text,
+            }
+        )
+
+    return documents
 
 
 def chunk_text(text: str):
@@ -15,29 +77,26 @@ def chunk_text(text: str):
     """
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=100,
-        chunk_overlap=20,
-        separators=["\n\n", "\n", " ", ""]
+        chunk_size=500,
+        chunk_overlap=100,
+        separators=["\n\n", "\n", " ", ""],
     )
 
-    chunks = splitter.split_text(text)
-
-    return chunks
+    return splitter.split_text(text)
 
 
 if __name__ == "__main__":
 
-    document = load_text("sample.txt")
+    documents = load_documents()
 
-    chunks = chunk_text(document)
+    print(f"\nLoaded {len(documents)} documents.\n")
 
-    print(f"\nTotal Chunks: {len(chunks)}\n")
+    for document in documents:
 
-    for index, chunk in enumerate(chunks, start=1):
+        chunks = chunk_text(document["text"])
 
         print("=" * 60)
-        print(f"Chunk {index}")
+        print(f"Document : {document['filename']}")
+        print(f"Category : {document['category']}")
+        print(f"Chunks   : {len(chunks)}")
         print("=" * 60)
-
-        print(chunk)
-        print()
