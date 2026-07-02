@@ -1,60 +1,31 @@
-"""Chat API — Track C RAG implementation."""
+"""Chat API"""
 
 from fastapi import APIRouter
-import ollama
-from qdrant_client import QdrantClient
+
+from backend.agents.langgraph_agent import banking_agent
 from backend.models.schemas import ChatRequest, ChatResponse
 
-router = APIRouter(prefix="/chat", tags=["chat"])
-
-client = QdrantClient(host="localhost", port=6333)
-TOP_K = 3
-
-
-def retrieve_and_answer(question: str) -> tuple[str, list[str]]:
-    response = ollama.embeddings(model="nomic-embed-text", prompt=question)
-    query_vector = response["embedding"]
-
-    results = client.query_points(
-        collection_name="banking_documents",
-        query=query_vector,
-        limit=TOP_K,
-    )
-
-    context = ""
-    sources = []
-    for point in results.points:
-        context += point.payload["text"] + "\n\n"
-        source = f"{point.payload['category']}/{point.payload['filename']}"
-        if source not in sources:
-            sources.append(source)
-
-    prompt = f"""You are an AI banking assistant.
-Answer ONLY using the provided context.
-If the answer is not in the context, reply exactly:
-"I could not find this information in the available banking documents."
-
-Context:
-{context}
-
-Question:
-{question}
-
-Answer:"""
-
-    answer = ollama.chat(
-        model="qwen2.5:1.5b",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return answer["message"]["content"], sources
+router = APIRouter(
+    prefix="/chat",
+    tags=["chat"],
+)
 
 
 @router.post("/", response_model=ChatResponse)
-async def chat(request: ChatRequest) -> ChatResponse:
-    reply, sources = retrieve_and_answer(request.message)
+async def chat(request: ChatRequest):
+
+    result = banking_agent.invoke(
+        {
+            "question": request.message,
+            "answer": "",
+            "sources": [],
+            "sentiment": "",
+        }
+    )
+
     return ChatResponse(
-        reply=reply,
-        sources=sources,
-        framework_used=request.agent_framework
+        reply=result["answer"],
+        sources=result["sources"],
+        sentiment=result["sentiment"],
+        framework_used="langgraph",
     )

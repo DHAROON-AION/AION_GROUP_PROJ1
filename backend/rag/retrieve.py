@@ -8,63 +8,49 @@ client = QdrantClient(
 
 TOP_K = 3
 
-# -----------------------------
-# Get User Question
-# -----------------------------
 
-question = input("Question: ")
+def ask_question(question: str) -> tuple[str, list[str]]:
+    """
+    Retrieve relevant context from Qdrant and generate an answer.
 
-# -----------------------------
-# Generate Query Embedding
-# -----------------------------
+    Returns:
+        answer (str)
+        sources (list[str])
+    """
 
-response = ollama.embeddings(
-    model="nomic-embed-text",
-    prompt=question
-)
+    response = ollama.embeddings(
+        model="nomic-embed-text",
+        prompt=question
+    )
 
-query_vector = response["embedding"]
+    query_vector = response["embedding"]
 
-# -----------------------------
-# Retrieve Relevant Chunks
-# -----------------------------
+    results = client.query_points(
+        collection_name="banking_documents",
+        query=query_vector,
+        limit=TOP_K,
+    )
 
-results = client.query_points(
-    collection_name="banking_documents",
-    query=query_vector,
-    limit=TOP_K,
-)
+    context = ""
+    sources = []
 
-context = ""
-sources = []
+    for point in results.points:
 
-for point in results.points:
+        context += point.payload["text"] + "\n\n"
 
-    context += point.payload["text"] + "\n\n"
+        source = f"{point.payload['category']}/{point.payload['filename']}"
 
-    source = f"{point.payload['category']}/{point.payload['filename']}"
+        if source not in sources:
+            sources.append(source)
 
-    if source not in sources:
-        sources.append(source)
+    prompt = f"""
+You are an AI banking assistant.
 
-# -----------------------------
-# Debug: Show Retrieved Context
-# -----------------------------
+Answer ONLY using the provided context.
 
-print("\n" + "=" * 80)
-print("CONTEXT SENT TO LLM")
-print("=" * 80)
-print(context)
-print("=" * 80)
+If the answer is not contained in the context, reply exactly:
 
-# -----------------------------
-# Build Prompt
-# -----------------------------
-
-prompt = f"""
-You are a banking assistant.
-
-Answer ONLY using the information below.
+"I could not find this information in the available banking documents."
 
 Context:
 {context}
@@ -75,28 +61,29 @@ Question:
 Answer:
 """
 
-# -----------------------------
-# Generate Answer
-# -----------------------------
+    answer = ollama.chat(
+        model="qwen2.5:1.5b",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+    )
 
-answer = ollama.chat(
-    model="qwen2.5:1.5b",
-    messages=[
-        {
-            "role": "user",
-            "content": prompt,
-        }
-    ],
-)
+    return answer["message"]["content"], sources
 
-# -----------------------------
-# Display Result
-# -----------------------------
 
-print("\nAnswer:\n")
-print(answer["message"]["content"])
+if __name__ == "__main__":
 
-print("\nSources:")
+    question = input("Question: ")
 
-for source in sources:
-    print(f"- {source}")
+    answer, sources = ask_question(question)
+
+    print("\nAnswer:\n")
+    print(answer)
+
+    print("\nSources:")
+
+    for source in sources:
+        print(f"- {source}")
