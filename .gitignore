@@ -68,7 +68,7 @@ tmp/
 .cache/
 
 # Model artifacts (pulled locally by Ollama)
-models/
+/models/
 
 # Evaluation outputs
 evaluation/results/
