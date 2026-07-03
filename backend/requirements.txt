@@ -18,3 +18,5 @@ langchain-postgres
 langchain-text-splitters
 pgvector
 pypdf
+ollama
+qdrant-client

@@ -49,24 +49,26 @@ class Settings(BaseSettings):
         alias="EMBEDDING_MODEL",
     )
 
+    @property
+    def DATABASE_URL(self) -> str:
+        return self.database_url
+
+    @property
+    def OLLAMA_BASE_URL(self) -> str:
+        return self.ollama_base_url
+
+    @property
+    def OLLAMA_DEFAULT_MODEL(self) -> str:
+        return self.ollama_default_model
+
+    @property
+    def EMBEDDING_MODEL(self) -> str:
+        return self.embedding_model
+
 
 @lru_cache
 def get_settings() -> Settings:
     """Return cached settings instance (singleton per process)."""
     return Settings()
 
-class Settings(BaseSettings):
-    
-    DATABASE_URL: str
-    
-    
-    OLLAMA_BASE_URL: str
-    OLLAMA_DEFAULT_MODEL: str
-    
-   
-    EMBEDDING_MODEL: str
-
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
-
-
-settings = Settings()
+settings = get_settings()

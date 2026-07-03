@@ -2,9 +2,11 @@ import ollama
 from qdrant_client import QdrantClient
 
 client = QdrantClient(
-    host="localhost",
+    host="qdrant",
     port=6333,
 )
+
+ollama_client = ollama.Client(host="http://ollama:11434")
 
 TOP_K = 3
 
@@ -18,7 +20,7 @@ def ask_question(question: str) -> tuple[str, list[str]]:
         sources (list[str])
     """
 
-    response = ollama.embeddings(
+    response = ollama_client.embeddings(
         model="nomic-embed-text",
         prompt=question
     )
@@ -61,7 +63,7 @@ Question:
 Answer:
 """
 
-    answer = ollama.chat(
+    answer = ollama_client.chat(
         model="qwen2.5:1.5b",
         messages=[
             {
