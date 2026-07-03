@@ -27,7 +27,7 @@ def generate_embeddings(documents):
         for chunk in chunks:
 
             response = ollama.embeddings(
-                model="nomic-embed-text",
+                model="nomic-embed-text:latest",
                 prompt=chunk
             )
 

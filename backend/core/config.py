@@ -30,7 +30,15 @@ class Settings(BaseSettings):
         default="llama3.2:3b",
         alias="OLLAMA_DEFAULT_MODEL",
     )
+    qdrant_host: str = Field(
+        default="qdrant",
+        alias="QDRANT_HOST",
+    )
 
+    qdrant_port: int = Field(
+        default=6333,
+        alias="QDRANT_PORT",
+    )
     database_url: str = Field(
         default="postgresql://aion_admin:bank_secure_password_2026@postgres:5432/aion_banking",
         alias="DATABASE_URL",

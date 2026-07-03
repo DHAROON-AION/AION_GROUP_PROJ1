@@ -1,12 +1,18 @@
 import ollama
 from qdrant_client import QdrantClient
 
+from backend.core.config import get_settings
+
+settings = get_settings()
+
 client = QdrantClient(
-    host="qdrant",
-    port=6333,
+    host=settings.qdrant_host,
+    port=settings.qdrant_port,
 )
 
-ollama_client = ollama.Client(host="http://ollama:11434")
+ollama_client = ollama.Client(
+    host=settings.ollama_base_url,
+)
 
 TOP_K = 3
 
@@ -21,8 +27,8 @@ def ask_question(question: str) -> tuple[str, list[str]]:
     """
 
     response = ollama_client.embeddings(
-        model="nomic-embed-text",
-        prompt=question
+        model="nomic-embed-text:latest",
+        prompt=question,
     )
 
     query_vector = response["embedding"]
@@ -37,7 +43,6 @@ def ask_question(question: str) -> tuple[str, list[str]]:
     sources = []
 
     for point in results.points:
-
         context += point.payload["text"] + "\n\n"
 
         source = f"{point.payload['category']}/{point.payload['filename']}"
@@ -48,7 +53,12 @@ def ask_question(question: str) -> tuple[str, list[str]]:
     prompt = f"""
 You are an AI banking assistant.
 
-Answer ONLY using the provided context.
+Use ONLY the information provided in the context.
+
+Answer in 1–3 complete sentences.
+
+Do not answer with only "Yes" or "No".
+Explain the answer briefly using the context.
 
 If the answer is not contained in the context, reply exactly:
 
@@ -77,8 +87,10 @@ Answer:
 
 
 if __name__ == "__main__":
+    print(f"Ollama URL : {settings.ollama_base_url}")
+    print(f"Qdrant     : {settings.qdrant_host}:{settings.qdrant_port}")
 
-    question = input("Question: ")
+    question = input("\nQuestion: ")
 
     answer, sources = ask_question(question)
 
