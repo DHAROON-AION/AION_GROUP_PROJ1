@@ -39,6 +39,21 @@ def render_health_panel(health: dict) -> None:
         st.caption(f"{icon} {name}: {comp_status}")
 
 
+def send_chat_message(message: str) -> dict | None:
+    """Call the FastAPI chat endpoint and return JSON or None on failure."""
+    try:
+        response = httpx.post(
+            f"{BACKEND_URL}/api/chat/",
+            json={"message": message},
+            timeout=300.0,
+        )
+        response.raise_for_status()
+        return response.json()
+    except Exception as exc:
+        st.error(f"Chat request failed: {exc}")
+        return None
+
+
 def main() -> None:
     st.set_page_config(
         page_title="AION AI Factory",
@@ -47,7 +62,7 @@ def main() -> None:
     )
 
     st.title("🏦 AION AI Factory")
-    st.caption("Self-hosted AI platform for banking — Phase 1 Infrastructure")
+    st.caption("Self-hosted AI banking assistant")
 
     with st.sidebar:
         st.header("System Status")
@@ -61,34 +76,34 @@ def main() -> None:
         st.divider()
         st.markdown(f"**Backend:** `{BACKEND_URL}`")
 
-    st.info(
-        "Phase 1 complete: Docker infrastructure is running. "
-        "Chat, agents, and RAG will be enabled in upcoming phases."
-    )
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Phase", "1 / 10", "Infrastructure")
-    with col2:
-        st.metric("Agent Framework", "—", "Phase 3")
-    with col3:
-        st.metric("RAG", "—", "Phase 5")
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+            if msg.get("sources"):
+                st.caption("Sources: " + ", ".join(msg["sources"]))
 
-    st.subheader("Chat (Coming in Phase 6)")
-    st.text_input(
-        "Message",
-        placeholder="Chat will be available after LangGraph agent is implemented...",
-        disabled=True,
-    )
+    if prompt := st.chat_input("Ask about bank policies, KYC, loans, etc..."):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
-    st.subheader("Quick Links")
-    link_col1, link_col2, link_col3 = st.columns(3)
-    with link_col1:
-        st.markdown(f"[API Docs]({BACKEND_URL}/docs)")
-    with link_col2:
-        st.markdown("[Langfuse](http://localhost:3000)")
-    with link_col3:
-        st.markdown("[Health Check](http://localhost:8000/health)")
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                result = send_chat_message(prompt)
+            if result:
+                st.markdown(result["reply"])
+                if result.get("sources"):
+                    st.caption("Sources: " + ", ".join(result["sources"]))
+                st.session_state.messages.append(
+                    {
+                        "role": "assistant",
+                        "content": result["reply"],
+                        "sources": result.get("sources", []),
+                    }
+                )
 
 
 if __name__ == "__main__":
