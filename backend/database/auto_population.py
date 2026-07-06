@@ -65,7 +65,7 @@ def populate_folders(base_path="./"):
         for file_name, content in files.items():
             file_path = os.path.join(folder_path, file_name)
             
-            # Write the file
+            
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content.strip())
             print(f"Created: {file_path}")
