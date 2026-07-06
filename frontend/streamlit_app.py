@@ -23,7 +23,6 @@ EXAMPLE_QUESTIONS = [
 
 
 def fetch_health() -> dict | None:
-    """Call the FastAPI health endpoint and return JSON or None on failure."""
     try:
         response = httpx.get(f"{BACKEND_URL}/health", timeout=10.0)
         response.raise_for_status()
@@ -34,13 +33,9 @@ def fetch_health() -> dict | None:
 
 
 def render_health_panel(health: dict) -> None:
-    """Display component health status in the sidebar."""
     status = health.get("status", "unknown")
-    color = {"healthy": "green", "degraded": "orange", "unhealthy": "red"}.get(
-        status, "gray"
-    )
+    color = {"healthy": "green", "degraded": "orange", "unhealthy": "red"}.get(status, "gray")
     st.markdown(f"**Platform status:** :{color}[{status.upper()}]")
-
     components = health.get("components", {})
     for name, info in components.items():
         comp_status = info.get("status", "unknown")
@@ -49,7 +44,6 @@ def render_health_panel(health: dict) -> None:
 
 
 def send_chat_message(message: str) -> dict | None:
-    """Call the FastAPI chat endpoint and return JSON or None on failure."""
     try:
         response = httpx.post(
             f"{BACKEND_URL}/api/chat/",
@@ -66,8 +60,46 @@ def send_chat_message(message: str) -> dict | None:
         return None
 
 
+def list_saved_chats() -> list[dict]:
+    try:
+        response = httpx.get(f"{BACKEND_URL}/api/chats/", timeout=10.0)
+        response.raise_for_status()
+        return response.json()
+    except Exception:
+        return []
+
+
+def load_saved_chat(chat_id: str) -> dict | None:
+    try:
+        response = httpx.get(f"{BACKEND_URL}/api/chats/{chat_id}", timeout=10.0)
+        response.raise_for_status()
+        return response.json()
+    except Exception:
+        return None
+
+
+def save_current_chat() -> None:
+    """Persist the current conversation to the backend."""
+    if not st.session_state.messages:
+        return
+    try:
+        httpx.post(
+            f"{BACKEND_URL}/api/chats/{st.session_state.chat_id}",
+            json={"messages": st.session_state.messages},
+            timeout=10.0,
+        )
+    except Exception:
+        pass  # saving failures shouldn't interrupt the chat experience
+
+
+def delete_saved_chat(chat_id: str) -> None:
+    try:
+        httpx.delete(f"{BACKEND_URL}/api/chats/{chat_id}", timeout=10.0)
+    except Exception:
+        pass
+
+
 def render_copy_button(text: str, key: str) -> None:
-    """Render a small copy-to-clipboard button using inline JS (no rerun triggered)."""
     escaped = text.replace("\\", "\\\\").replace("`", "\\`").replace("\n", "\\n")
     st.markdown(
         f"""
@@ -85,12 +117,10 @@ def render_copy_button(text: str, key: str) -> None:
 
 
 def render_message(msg: dict) -> None:
-    """Render a single chat message with timestamp, sources, and copy button."""
     role = msg["role"]
     avatar = "🧑" if role == "user" else "🏦"
     with st.chat_message(role, avatar=avatar):
         st.markdown(msg["content"])
-
         footer_cols = st.columns([1, 1, 6])
         with footer_cols[0]:
             if msg.get("timestamp"):
@@ -98,7 +128,6 @@ def render_message(msg: dict) -> None:
         with footer_cols[1]:
             if role == "assistant":
                 render_copy_button(msg["content"], msg.get("id", str(uuid.uuid4())))
-
         sources = msg.get("sources")
         if sources:
             with st.expander(f"📄 Sources ({len(sources)})"):
@@ -107,7 +136,6 @@ def render_message(msg: dict) -> None:
 
 
 def render_welcome() -> None:
-    """Shown when there's no conversation yet."""
     st.markdown(
         """
         <div style="text-align:center; padding: 40px 20px; color:#666;">
@@ -121,12 +149,22 @@ def render_welcome() -> None:
     )
 
 
+def start_new_chat() -> None:
+    save_current_chat()
+    st.session_state.chat_id = str(uuid.uuid4())
+    st.session_state.messages = []
+
+
+def switch_to_chat(chat_id: str) -> None:
+    save_current_chat()
+    loaded = load_saved_chat(chat_id)
+    if loaded:
+        st.session_state.chat_id = chat_id
+        st.session_state.messages = loaded["messages"]
+
+
 def main() -> None:
-    st.set_page_config(
-        page_title="AION AI Factory",
-        page_icon="🏦",
-        layout="wide",
-    )
+    st.set_page_config(page_title="AION AI Factory", page_icon="🏦", layout="wide")
 
     st.markdown(
         """
@@ -141,11 +179,42 @@ def main() -> None:
     st.title("🏦 AION AI Factory")
     st.caption("Self-hosted AI banking assistant — ask about policies, KYC, loans, cards, and more")
 
+    if "chat_id" not in st.session_state:
+        st.session_state.chat_id = str(uuid.uuid4())
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    if "pending_question" not in st.session_state:
+        st.session_state.pending_question = None
+
     with st.sidebar:
+        if st.button("➕ New chat", use_container_width=True, type="primary"):
+            start_new_chat()
+            st.rerun()
+
+        st.divider()
+        st.subheader("🕓 Recent chats")
+        saved_chats = list_saved_chats()
+        if not saved_chats:
+            st.caption("No saved chats yet")
+        for chat in saved_chats:
+            is_current = chat["id"] == st.session_state.chat_id
+            cols = st.columns([5, 1])
+            with cols[0]:
+                label = ("🟢 " if is_current else "") + chat["title"]
+                if st.button(label, key=f"chat_{chat['id']}", use_container_width=True):
+                    switch_to_chat(chat["id"])
+                    st.rerun()
+            with cols[1]:
+                if st.button("🗑️", key=f"del_{chat['id']}"):
+                    delete_saved_chat(chat["id"])
+                    if is_current:
+                        start_new_chat()
+                    st.rerun()
+
+        st.divider()
         st.header("System Status")
         if st.button("🔄 Refresh Health", use_container_width=True):
             st.rerun()
-
         health = fetch_health()
         if health:
             render_health_panel(health)
@@ -158,16 +227,6 @@ def main() -> None:
         for q in EXAMPLE_QUESTIONS:
             if st.button(q, use_container_width=True, key=f"example_{q}"):
                 st.session_state.pending_question = q
-
-        st.divider()
-        if st.button("🗑️ Clear conversation", use_container_width=True):
-            st.session_state.messages = []
-            st.rerun()
-
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-    if "pending_question" not in st.session_state:
-        st.session_state.pending_question = None
 
     if not st.session_state.messages:
         render_welcome()
@@ -217,6 +276,7 @@ def main() -> None:
                         "id": msg_id,
                     }
                 )
+                save_current_chat()
 
 
 if __name__ == "__main__":

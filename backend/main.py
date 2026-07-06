@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api import chat, health
+from backend.api import chat, chats, health
 from backend.core.config import get_settings
 from backend.database.postgres import init_database
 
@@ -62,6 +62,7 @@ def create_app() -> FastAPI:
 
     app.include_router(health.router)
     app.include_router(chat.router, prefix="/api")
+    app.include_router(chats.router, prefix="/api")
 
     @app.get("/")
     async def root():
