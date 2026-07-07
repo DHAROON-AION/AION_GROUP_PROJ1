@@ -1,0 +1,16 @@
+# METADATA
+# document_type: corporate_credit_policy
+# classification: internal_restricted
+# target_audience: SME_Lending_Division
+# last_updated: 2026-06-20
+
+## 1. SME Financing Parameters
+This policy governs working capital and term loans provided to Small and Medium Enterprises (SMEs).
+* Eligibility: The business must possess a valid Commercial Registration (CR), be actively operating for a minimum of 2 continuous years, and demonstrate positive cash flow in the audited financials for the preceding year.
+* Facility Limits: Unsecured working capital limits up to 1,000,000 SAR. Secured term loans up to 10,000,000 SAR.
+* Profit Rates: Priced dynamically based on the company's internal risk rating (1 through 7) assessed via the local predictive credit model.
+
+## 2. Required Documentation
+* Audited financial statements by a certified public accountant.
+* Bank statements covering the last 12 months (if the primary operating account is held externally).
+* Personal guarantees from all partners/shareholders holding more than a 10% stake in the entity.
