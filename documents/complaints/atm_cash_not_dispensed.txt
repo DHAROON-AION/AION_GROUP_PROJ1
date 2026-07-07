@@ -1,0 +1,15 @@
+# METADATA
+# document_type: dispute_resolution_guide
+# classification: internal_open
+# regulatory_alignment: SAMA_ATM_Reconciliation
+# last_updated: 2026-07-02
+
+## 1. Immediate Diagnostic Steps
+If a customer's account is debited but the ATM fails to dispense cash:
+* Retrieve Terminal ID: The system must automatically parse the user's latest transaction logs to identify the exact ATM Terminal ID and timestamp.
+* On-Us vs. Off-Us: Determine if the ATM is owned by the bank ("On-Us") or part of a third-party/SPAN network ("Off-Us").
+
+## 2. Standard Service Level Agreements (SLAs)
+* "On-Us" ATMs: Automated reconciliation runs every 24 hours. The core system will proactively reverse the debit within 48 hours without requiring a formal customer claim.
+* "Off-Us" ATMs (Domestic): The customer must formally log a dispute. The internal system will route the claim via the central national switch. SLA for resolution is 7 to 14 business days.
+* "Off-Us" ATMs (International): Dispute routed via Visa/Mastercard network. SLA for resolution can take up to 45 calendar days. No provisional credit is issued for international ATM failures until the network confirms the fault.
