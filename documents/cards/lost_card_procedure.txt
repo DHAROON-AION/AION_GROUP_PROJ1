@@ -1,0 +1,21 @@
+# METADATA
+# document_type: standard_operating_procedure
+# classification: internal_open
+# regulatory_alignment: PDPL_Incident_Response
+# last_updated: 2026-06-22
+
+## 1. Automated Triage for Lost/Stolen Cards
+When a user intent is classified as "lost card" or "stolen card" by the AION terminal's LangChain router, the system must immediately execute the following defensive measures without waiting for human agent handover:
+
+### Step 1: Status Update
+Change the card status in the core ledger from 'Active' (00) to 'Lost/Stolen' (41/43). This action is irreversible. 
+
+### Step 2: Token Suspension
+Automatically suspend all digital wallet tokens (Apple Pay, mada Pay) associated with the compromised Primary Account Number (PAN).
+
+### Step 3: Liability Shift
+The customer's financial liability for unauthorized transactions ceases exactly at the timestamp the loss is reported to the system. 
+
+## 2. Replacement Workflow
+* Once the card is permanently blocked, the conversational assistant must automatically prompt the user to confirm their registered delivery address for a replacement card.
+* The standard replacement fee of 35 SAR applies unless the user is a Premium or VIP account holder.
