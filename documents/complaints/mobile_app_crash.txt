@@ -1,0 +1,14 @@
+# METADATA
+# document_type: technical_support_script
+# classification: internal_restricted
+# system_target: Mobile_Engineering_Team
+# last_updated: 2026-06-28
+
+## 1. Frontline Triage for Application Crashes
+When a customer reports an application crash via the chatbot, the LangChain routing pipeline must extract the OS version and app version.
+* iOS Users: Advise clearing the application cache via iOS settings and ensuring the device is running iOS 16.0 or higher.
+* Android Users: Advise force-stopping the application and clearing localized data storage. Minimum requirement is Android 11.
+
+## 2. Bug Escalation Protocol
+* If the crash is reproduced by multiple users within a 1-hour window, an automated P1 (Priority 1) alert is dispatched to the core engineering Docker orchestration team.
+* Support agents must instruct users to utilize the web-based internet banking portal as a fallback until the containerized mobile API services are restored and validated.
