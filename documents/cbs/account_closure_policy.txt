@@ -1,0 +1,16 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_restricted
+# regulatory_alignment: SAMA_Account_Management
+# last_updated: 2026-07-05
+
+## 1. Prerequisites for Account Closure
+Before an account can be closed, the following automated checks must clear via the core banking API:
+* Balance Verification: The account balance must be exactly 0.00 SAR. Any remaining funds must be transferred to an external IBAN or issued via a cashier's check.
+* Credit Settlement: All linked credit cards, personal loans, and overdraft facilities must be fully settled.
+* Pending Transactions: There must be no uncleared cheques or pending POS authorizations.
+
+## 2. Archival and Data Retention
+* Upon successful closure, the customer's financial records are not deleted. In accordance with data sovereignty laws, all records are cryptographically archived within the bank's on-premise, self-hosted database clusters.
+* The customer's vector embeddings in the local pgvector instance used for predictive modeling must be flagged with an "inactive" status to prevent the AI assistant from proactively retrieving their profile for active cross-selling.
+* Retention Period: All account histories must be retained for a mandatory minimum of 10 years post-closure.
