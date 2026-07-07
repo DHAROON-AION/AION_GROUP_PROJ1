@@ -8,3 +8,22 @@
 The bank executes a multi-stage validation workflow for all new relationship originations to ensure complete alignment with data privacy laws and zero leakage of customer data outside local infrastructure.
 
 [Stage 1: Identity Capture] -> [Stage 2: KYC & Verification] -> [Stage 3: Consent & PDPL Sign-off] -> [Stage 4: Core Account Provisioning]
+
+2. Mandatory Document Checklists
+2.1 Individual National Residents
+Valid National ID / Iqama Card (Captured via secure local optical character recognition)
+
+Verified Mobile Number (Linked to national digital identity single sign-on)
+
+Proof of Physical Address (National Address Registry record)
+
+Employment Verification Letter or Salary Certificate (For active checking accounts)
+
+2.2 Data Sovereignty and Consent Mandate
+Before account provisioning, the relationship manager or digital platform must present the formal Data Privacy Disclosure.
+
+Customer must explicitly opt-in via a cryptographic digital signature.
+
+All telemetry, personal identifiable information (PII), and financial history captured during onboarding must reside exclusively in on-premise secure database clusters.
+
+Cross-border transit of onboarding records is strictly prohibited.
