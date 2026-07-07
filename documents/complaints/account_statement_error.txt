@@ -1,0 +1,16 @@
+# METADATA
+# document_type: troubleshooting_workflow
+# classification: internal_open
+# system_target: Core_Ledger_API
+# last_updated: 2026-06-14
+
+## 1. Triage Protocol for Missing or Duplicate Entries
+When a customer reports a discrepancy in their digital or printed statement, the AI assistant or agent must follow this diagnostic path:
+* Verify Authorization Status: Confirm if the transaction is "Pending Authorization" or "Settled." Pending POS holds drop off automatically within 14 days if not claimed by the merchant.
+* Cross-Reference Core Ledger: Query the on-premise transactional database to verify if a duplicate debit was caused by a known batch-processing delay (Error Code: BATCH_SYNC_500).
+* Initiate Reconciliation: If a duplicate settled transaction is verified, route a "Ledger Correction Request" to the Back Office Operations queue.
+
+## 2. Manual Statement Audit Requests
+* Customers have the right to request a manual audit of their statements dating back a maximum of 5 years.
+* Standard SLA for producing a certified manual audit is 7 business days.
+* Fee: 50 SAR per statement year audited (waived if a bank error is definitively found).
