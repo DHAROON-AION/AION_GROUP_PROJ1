@@ -1,0 +1,15 @@
+# METADATA
+# document_type: user_documentation
+# classification: internal_open
+# regulatory_alignment: National_QR_Standards
+# last_updated: 2026-05-18
+
+## 1. Scanning and Payment Execution
+The mobile application features an integrated QR scanner that complies with the interoperable national standard for merchant payments.
+* Workflow: User taps "QR Pay" -> Camera activates -> Scans merchant QR -> System parses the payload (Merchant ID, Amount if static, Currency) -> User confirms payment via biometric or PIN.
+* Limits: QR payments are strictly capped at 10,000 SAR per day for Standard accounts to mitigate risk at physical points of sale.
+
+## 2. Generation of Static QR for P2P
+* Customers can generate a dynamic QR code within the app to receive funds instantly from other local bank users. 
+* The generated QR encodes the user's mobile number or IBAN via the IPS (Instant Payment System) alias directory. 
+* The generated QR code expires after 15 minutes to prevent unauthorized long-term sharing.
