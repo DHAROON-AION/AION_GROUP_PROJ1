@@ -1,0 +1,22 @@
+# METADATA
+# document_type: operational_policy
+# classification: internal_restricted
+# regulatory_alignment: SAMA_Joint_Account_Rules
+# system_target: AION_AI_Factory_Core
+# last_updated: 2026-06-18
+
+## 1. Joint Account Mandate Types
+When opening a joint account, the applicants must legally define the operational mandate, which dictates how the core system processes transaction requests.
+
+### 1.1 "Either or Survivor" Mandate
+* Signature Requirement: Any single account holder can authorize transactions, sign cheques, and withdraw funds independently.
+* Digital Access: Both holders receive distinct mobile banking credentials. The AION assistant will process requests from either user's authenticated session equally.
+* Survivorship: In the event of death of one holder, the account balance automatically vests to the surviving holder.
+
+### 1.2 "Jointly" Mandate
+* Signature Requirement: All financial transactions require the cryptographic or physical signature of all registered account holders.
+* Digital Access: Digital transfers initiated by User A will remain in a "Pending Authorization" state until User B logs in and approves the transaction via their local app portal.
+* Survivorship: In the event of death, the account is immediately frozen until a formal sharia court decree determines the distribution of the deceased's share.
+
+## 2. Dispute Protocol
+If an official dispute is logged between joint holders, the bank will immediately apply a system-level freeze on all outward transfers until a mutual written agreement is provided.
