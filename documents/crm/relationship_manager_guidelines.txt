@@ -1,0 +1,16 @@
+# METADATA
+# document_type: operational_handbook
+# classification: internal_confidential
+# target_audience: Wealth_Management_Divisions
+# last_updated: 2026-07-02
+
+## 1. Core Portfolio Management Rules
+Relationship Managers (RMs) assigned to Premium and VIP portfolios are legally obligated to review their assigned clients' portfolios quarterly to ensure ongoing suitability.
+
+### 1.1 Mandatory Interaction Cadence
+* VIP Tier Clients: Minimum of one secure, recorded audio/video interaction or face-to-face meeting every 30 calendar days.
+* Premium Tier Clients: Minimum of one formal relationship health check via secure digital message or email every 60 calendar days.
+
+## 2. Security and Device Compliance
+* RMs are strictly forbidden from copying client financial projections, asset balances, or contact logs onto local desktop storage or unencrypted media.
+* Any data exported for portfolio analysis must remain within the secure, sandboxed container network allocated to the wealth management stack.
