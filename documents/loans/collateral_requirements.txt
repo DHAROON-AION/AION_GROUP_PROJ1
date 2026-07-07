@@ -1,0 +1,16 @@
+# METADATA
+# document_type: credit_risk_guidelines
+# classification: internal_restricted
+# last_updated: 2026-05-15
+
+## 1. Acceptable Asset Classes and LTV Limits
+To secure financing facilities, the bank accepts specific collateral types, subject to strict Loan-to-Value (LTV) ratios to mitigate market depreciation risk.
+
+* Real Estate (Completed Residential): Maximum 85% LTV for first-time buyers; 70% LTV for subsequent properties or investment real estate.
+* Real Estate (Commercial): Maximum 60% LTV.
+* Cash Deposits / Fixed Term Deposits: 100% LTV. Funds are cryptographically blocked in the core system for the duration of the loan.
+* Equities (Approved Blue-Chip Local Stocks): Maximum 50% LTV. The portfolio must be managed by the bank's affiliated brokerage arm.
+
+## 2. Valuation Protocol
+* Real estate collateral must be assessed by at least two independent, government-certified evaluation agencies. The bank will utilize the lower of the two valuations to calculate the maximum permissible LTV.
+* Valuations must be refreshed every 3 years for commercial properties securing long-term facilities.
