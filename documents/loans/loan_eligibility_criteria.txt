@@ -1,0 +1,16 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_restricted
+# system_target: Core_Banking_Ledger
+# last_updated: 2026-06-25
+
+## 1. Pre-Disbursement Verification Checklist
+Before the core banking system automatically releases approved loan funds into a customer's account, the following digital checks must pass without human intervention:
+* Contract Signature: The promissory note and loan contract must be cryptographically signed by the user via the National Single Sign-On (Nafath) portal.
+* Salary Assignment: For salary-backed loans, the system must verify the receipt of the electronic "Salary Assignment Letter" from the employer's HR system via the secure B2B gateway.
+* Insurance Binding: For auto and home loans, the mandatory collateral insurance policy must be active and registered in the database.
+
+## 2. Disbursement Execution
+* Personal Loans: Funds are disbursed instantly to the customer's linked internal Current Account once the checklist passes.
+* Auto Loans: Funds are never disbursed to the customer. The system generates a manager's cheque or electronic direct transfer payable exclusively to the verified automotive dealership.
+* Home Loans: Disbursements are scheduled in tranches directly to the property developer (for off-plan) or as a single lump sum to the seller's verified IBAN (for ready properties) under the supervision of a public notary.
