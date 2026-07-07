@@ -1,0 +1,26 @@
+# METADATA
+# document_type: business_logic
+# classification: internal_open
+# regulatory_alignment: Retail_Banking_Standards
+# last_updated: 2026-06-20
+
+## 1. Tier Definitions and Financial Thresholds
+Account tiering determines the customer's access to premium services, dedicated relationship managers, and fee waivers. Tiers are automatically calculated at the end of each calendar month based on the Average Monthly Balance (AMB) or total relationship value (including investments and loans).
+
+### 1.1 Standard Tier (Retail)
+* AMB Requirement: 0 - 99,999 SAR
+* Salary Transfer Requirement: None mandatory, though a 5,000 SAR minimum salary waives the standard monthly maintenance fee of 15 SAR.
+* Service Channel: Primary support via AION AI assistant, mobile app, and standard call center queue.
+
+### 1.2 Premium Tier (Affluent)
+* AMB Requirement: 100,000 - 499,999 SAR
+* Salary Transfer Requirement: Minimum 20,000 SAR consecutive monthly transfer.
+* Service Channel: Priority call center routing, access to premium branch lounges, and waived fees for international ATM withdrawals.
+
+### 1.3 VIP Tier (Private Banking)
+* AMB Requirement: 500,000+ SAR or total investment portfolio exceeding 1,000,000 SAR.
+* Salary Transfer Requirement: Not applicable.
+* Service Channel: Dedicated human Relationship Manager available 24/7, exclusive concierge services, and preferential exchange rates.
+
+## 2. Downgrade Protocols
+If a customer fails to meet the financial thresholds of their current tier for three consecutive months, the core banking system will automatically downgrade their profile on the 1st of the following month. The automated notification engine must dispatch an SMS warning 15 days prior to the downgrade execution.
