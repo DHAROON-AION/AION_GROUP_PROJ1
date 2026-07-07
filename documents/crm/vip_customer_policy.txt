@@ -1,0 +1,14 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_restricted
+# regulatory_alignment: Wealth_Governance_Standards
+# last_updated: 2026-06-29
+
+## 1. Elite Onboarding & Maintenance Criteria
+To qualify for the formal VIP Banking Tier, an individual must fulfill at least one of the following capital thresholds:
+* Maintain a net liquid deposit balance of ≥ 500,000 SAR across all savings/current checking accounts for a sustained 3-month average rolling window.
+* Hold an active, bank-managed investment portfolio valued at ≥ 1,000,000 SAR.
+
+## 2. Exclusive Privileges & Processing Exceptions
+* Zero Fees: Complete waiver on all standard administrative actions including international transfers, physical card replacements, demand drafts, and checkbooks.
+* Immediate SLA Escalation: Any IT system incident, card lock, or transaction inquiry associated with a VIP CIF code bypasses the standard triage queue and is immediately routed to the Tier-2 Support desk for resolution within 15 minutes.
