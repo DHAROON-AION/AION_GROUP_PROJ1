@@ -1,0 +1,14 @@
+# METADATA
+# document_type: security_architecture
+# classification: internal_strictly_confidential
+# system_target: IAM_Local_Cluster
+# last_updated: 2026-07-04
+
+## 1. 2FA Modalities and Fallbacks
+The digital platform enforces Two-Factor Authentication (2FA) for all login events. 
+* Primary Factor: Alphanumeric Password or Biometric verification (Something you know / Something you are).
+* Secondary Factor: SMS OTP or Time-based One-Time Password (TOTP) from an authenticated local authenticator token (Something you have).
+
+## 2. Implementation Mandates for the AI Factory
+* The AION AI assistant must never ask the user to provide their OTP or 2FA code within the chat interface. Any detected sequence resembling an OTP inputted into the chat context window must be instantly redacted by the LangChain pre-processor before the prompt is embedded.
+* Internal developers testing the local LLM stack are forbidden from disabling the 2FA requirement in the staging environment. Test accounts must utilize pre-provisioned static TOTP seeds for automated testing.
