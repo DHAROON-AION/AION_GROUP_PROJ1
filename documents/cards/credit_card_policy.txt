@@ -1,0 +1,17 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# regulatory_alignment: SAMA_Consumer_Credit
+# last_updated: 2026-06-12
+
+## 1. Credit Card Fee Structure
+This policy outlines the standardized fees and charges applicable to all credit card products across standard and premium tiers.
+
+* Annual Membership Fee: Standard Tier is 200 SAR; Premium Tier is 500 SAR (waived for the first year).
+* Late Payment Fee: 100 SAR per billing cycle if the minimum payment (5% of the outstanding balance or 100 SAR, whichever is higher) is not received by the 25th of the month.
+* Cash Advance Fee: 75 SAR per transaction or 3% of the advanced amount, whichever is greater, up to a maximum of 30% of the total assigned credit limit.
+* Foreign Transaction Fee: 2.75% markup on the standard Visa/Mastercard exchange rate.
+
+## 2. Credit Limit Assignment
+* Minimum Credit Limit: 5,000 SAR.
+* Maximum Credit Limit: Capped at 3 times the customer's verified monthly net salary, subject to the central bank's maximum allowable Debt Burden Ratio (DBR) of 33%.
