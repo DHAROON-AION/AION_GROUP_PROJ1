@@ -1,0 +1,10 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_confidential
+# regulatory_alignment: PDPL_Data_Sovereignty
+# last_updated: 2026-05-20
+
+## 1. Onboarding Workflow Overview
+The bank executes a multi-stage validation workflow for all new relationship originations to ensure complete alignment with data privacy laws and zero leakage of customer data outside local infrastructure.
+
+[Stage 1: Identity Capture] -> [Stage 2: KYC & Verification] -> [Stage 3: Consent & PDPL Sign-off] -> [Stage 4: Core Account Provisioning]
