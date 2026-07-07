@@ -1,0 +1,17 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_confidential
+# system_target: CRM_Ticketing_System
+# last_updated: 2026-05-18
+
+## 1. Complaint Logging Categories
+To ensure accurate semantic retrieval and reporting, branch service complaints must be classified into one of the following strict categories during intake:
+* Staff Unprofessionalism (Requires exact timestamp and agent desk number).
+* Excessive Wait Times (Triggered if wait exceeds 45 minutes from ticket issuance).
+* Physical Infrastructure (E.g., broken self-service kiosks, unsafe conditions).
+* Transaction Refusal (Requires citation of the specific product/service denied).
+
+## 2. Escalation and Investigation Protocol
+* Complaints are routed directly to the Regional Branch Director, bypassing the local Branch Manager.
+* CCTV and Audio Logs: The investigation unit is authorized to pull on-premise security recordings corresponding to the customer's visit timestamp.
+* Customer Callback: The Regional Director's office must contact the customer via recorded telephone line within 3 business days to provide a resolution summary.
