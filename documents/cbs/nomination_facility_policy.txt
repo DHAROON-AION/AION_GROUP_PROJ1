@@ -1,0 +1,15 @@
+# METADATA
+# document_type: standard_operating_procedure
+# classification: internal_confidential
+# regulatory_alignment: PDPL_Data_Privacy
+# last_updated: 2026-06-25
+
+## 1. Beneficiary Designation
+Account holders have the right to nominate one or more beneficiaries to receive the account funds in the event of the primary holder's death.
+* Maximum Nominations: Up to 5 discrete beneficiaries per CIF.
+* Share Allocation: The account holder must define the percentage share for each beneficiary (must total exactly 100%).
+* Modification: Nominations can be modified or revoked at any time via the secure digital portal utilizing two-factor authentication.
+
+## 2. Data Sovereignty Requirements
+* In strict adherence to PDPL and local operational mandates, all Personally Identifiable Information (PII) regarding designated beneficiaries must be stored exclusively on self-hosted, air-gapped PostgreSQL databases.
+* Beneficiary data is excluded from standard predictive AI pipelines and must never be vectorized or indexed in the local Qdrant instance used for front-end chatbot interactions to prevent accidental leakage.
