@@ -1,0 +1,15 @@
+# METADATA
+# document_type: troubleshooting_workflow
+# classification: internal_open
+# regulatory_alignment: National_Clearing_Rules
+# last_updated: 2026-06-08
+
+## 1. Expected Clearing Cycles
+Before logging a fault, the support system must verify the standard clearing cycle parameters:
+* Intra-Bank Cheques (Drawn on the same bank): Clears instantly upon deposit validation.
+* Local Inter-Bank Cheques (Deposited before 12:00 PM AST): Clears by 4:00 PM the next business day.
+* Local Inter-Bank Cheques (Deposited after 12:00 PM AST): Clears by 4:00 PM on the second business day.
+
+## 2. Handling Stuck or Returned Instruments
+* Technical Rejection: If the centralized optical character recognition (OCR) system fails to read the MICR line, the cheque is flagged for manual review, adding 24 hours to the SLA.
+* Insufficient Funds (Bounced): The system immediately applies a 50 SAR penalty to the issuer. The depositor receives a digital notification and must collect the physical returned cheque from their domiciled branch.
