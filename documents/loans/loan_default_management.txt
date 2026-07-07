@@ -1,0 +1,16 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_strictly_confidential
+# regulatory_alignment: SAMA_Collections_Guidelines
+# last_updated: 2026-05-22
+
+## 1. Delinquency Timelines and Escalation
+The automated collection engine triggers specific actions based on the number of Days Past Due (DPD).
+* DPD 1 - 15 (Grace Period): Automated SMS reminders and in-app push notifications. No penal charges applied.
+* DPD 16 - 30: Outbound call from the Tier-1 collections desk. Account flagged internally as "Past Due."
+* DPD 31 - 90: Escalation to Tier-2 collections. Late payment fees applied. Core banking system blocks all outward transfers from the customer's current accounts to force settlement.
+* DPD 91+: Account officially classified as "Non-Performing Loan" (NPL). Customer is reported to the National Credit Bureau (SIMAH) as a defaulter.
+
+## 2. Restructuring and Hardship Protocol
+* If a customer provides verifiable proof of unexpected job loss or medical emergency prior to DPD 90, the bank may offer a one-time restructuring plan.
+* Restructuring options include granting a 6-month payment holiday or extending the loan tenure to reduce the EMI, subject to internal credit committee approval.
