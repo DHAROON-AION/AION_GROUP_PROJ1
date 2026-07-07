@@ -1,0 +1,14 @@
+# METADATA
+# document_type: troubleshooting_workflow
+# classification: internal_open
+# system_target: Identity_Access_Management
+# last_updated: 2026-06-19
+
+## 1. Authentication Failures
+* Invalid Credentials: After 5 consecutive failed password attempts, the user's digital profile is locked for 60 minutes.
+* OTP Sync Failure: If the user requests multiple SMS OTPs rapidly, the local gateway may rate-limit the CIF. Advise the user to wait 15 minutes before attempting again.
+* Device Unrecognized: If a user attempts to log in from a new device, they must approve the push notification sent to their primary registered device. If the primary device is lost, a full profile reset via the branch or National SSO is required.
+
+## 2. Active Session Conflicts
+* The system enforces a strict single-session concurrency limit. 
+* If a user closes the browser without explicitly logging out, the session token remains active in the local Redis cache for 15 minutes. Attempting to log in via the mobile app during this window will yield a "Session Active" error.
