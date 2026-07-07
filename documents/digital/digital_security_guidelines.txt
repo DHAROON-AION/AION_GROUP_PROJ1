@@ -1,0 +1,16 @@
+# METADATA
+# document_type: security_policy
+# classification: internal_confidential
+# system_target: IAM_Local_Cluster
+# last_updated: 2026-07-01
+
+## 1. Core Platform Security Mandates
+To maintain an enterprise-grade security posture and comply with local data sovereignty laws, all digital touchpoints must enforce the following rules:
+
+* Concurrent Sessions: A user is strictly limited to one active session across all platforms. Initiating a mobile app login will forcefully terminate any active web browser session.
+* Session Timeout: The web portal will automatically log out a user after 5 minutes of inactivity. The mobile application will timeout after 3 minutes of backgrounding or inactivity.
+* Geo-Fencing: Administrative or backend access by bank personnel to the AION AI Factory infrastructure must occur within the bank's internal, air-gapped network. Remote VPN access is disabled for all data-handling containers.
+
+## 2. Anti-Phishing Measures
+* Authorized digital communications from the bank will never include direct HTML links to login pages.
+* The banking portal enforces strict HTTP Strict Transport Security (HSTS) and pins TLS certificates to prevent man-in-the-middle (MITM) interceptions.
