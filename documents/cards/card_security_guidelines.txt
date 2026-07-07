@@ -1,0 +1,19 @@
+# METADATA
+# document_type: security_protocol
+# classification: internal_confidential
+# system_target: AION_Fraud_Engine
+# last_updated: 2026-06-25
+
+## 1. Automated Fraud Detection Triggers
+The local fraud detection engine evaluates transaction telemetry in real-time. The following events trigger an automatic, immediate card block (Code: 62 - Restricted Card).
+
+* Velocity Trigger: More than 4 distinct POS or E-commerce transactions within a 5-minute rolling window.
+* Geographic Anomaly: A physical POS transaction in a foreign country within 4 hours of an ATM withdrawal in Saudi Arabia.
+* PIN Failure: 3 consecutive incorrect PIN entries at any ATM or POS terminal.
+* CVV Failure: 3 consecutive incorrect CVV entries during online checkout.
+
+## 2. 3D Secure (3DS) Mandates
+All E-commerce transactions must pass through the bank's local 3D Secure gateway.
+* If the merchant platform does not support 3DS, the transaction is automatically declined.
+* OTP Expiry for 3DS: 120 seconds.
+* Overriding 3DS with static passwords is strictly prohibited.
