@@ -1,0 +1,16 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# regulatory_alignment: Consumer_Credit_Regulations
+# last_updated: 2026-06-05
+
+## 1. Auto Lease-to-Own Criteria
+The bank offers vehicle financing under a Sharia-compliant Ijarah (Lease-to-Own) structure.
+* Maximum Tenure: 60 months (5 years) for brand new vehicles; 36 months for pre-owned vehicles.
+* Down Payment: 5% minimum for salary-assigned customers; 10% minimum for non-salary assigned.
+* Maximum Financing Amount: 500,000 SAR or restricted by the maximum 45% Debt Burden Ratio (DBR), whichever is lower.
+* Insurance: Comprehensive motor insurance is bundled for the entire tenure and calculated into the monthly lease payment.
+
+## 2. Early Settlement and Transfer
+* Early Settlement: A customer can request early ownership transfer by settling the outstanding principal. The bank will waive the remaining unearned profit minus a processing fee equivalent to 3 months of profit.
+* Transfer of Lease: The lease cannot be transferred to a third party without the bank re-evaluating the new lessee's credit profile and issuing a new contract.
