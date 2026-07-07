@@ -1,0 +1,20 @@
+# METADATA
+# document_type: security_protocol
+# classification: internal_restricted
+# system_target: Local_SMS_Gateway
+# last_updated: 2026-06-25
+
+## 1. One-Time Password (OTP) Parameters
+To protect against interception and replay attacks, all system-generated OTPs must adhere to the following strictly defined lifecycle rules:
+
+* Character Length: 6-digit numeric string.
+* Expiry Window: Exactly 60 seconds from the timestamp of generation.
+* Maximum Attempts: The user is allowed 3 incorrect entry attempts. Upon the 3rd failure, the transaction is rejected, and the specific OTP is invalidated.
+* Resend Cooldown: A minimum 30-second cooldown is enforced before a user can request a new OTP via SMS to prevent gateway flooding.
+
+## 2. Trigger Events
+An OTP is mandatorily triggered for the following high-risk actions, even if the user has authenticated via biometrics:
+* Adding or modifying a beneficiary IBAN.
+* Initiating a transaction that exceeds 50% of the daily transfer limit.
+* Downloading official stamped bank statements.
+* Updating core contact details (Email, Phone, National Address).
