@@ -1,0 +1,26 @@
+# METADATA
+# document_type: standard_operating_procedure
+# classification: internal_restricted
+# system_target: AION_AI_Factory_Core
+# last_updated: 2026-07-01
+
+## 1. Customer Inquiry Resolution SLAs
+The following Service Level Agreements (SLAs) dictate the maximum permissible time to resolve or escalate customer queries based on the channel and severity.
+
+### 1.1 Automated Digital Channels
+* Standard Balance/Transaction Query: < 2.0 seconds (Target local LLM serving response time)
+* Document Retrieval (Statements, IBAN certificates): < 5.0 seconds
+* System Availability Uptime: 99.99% (Measured monthly)
+
+### 1.2 Human-Assisted Channels
+* General Inquiry (Secure Message): 12 business hours
+* Dispute/Fraud Claim Initial Triage: 1 business hour
+* Loan Application Preliminary Decision: 24 business hours
+
+---
+
+## 2. Infrastructure & Data Handling SLAs
+To maintain strict compliance with SAMA guidelines regarding data residency, the internal AI assistant and underlying microservices must adhere to the following operational constraints:
+* Data Transit: Customer data must never leave the bank's own infrastructure. All retrieval-augmented generation (RAG) processes must occur within the secured local network.
+* Database Latency: Semantic search queries executed against local Qdrant or pgvector instances must return context chunks within 500 milliseconds to prevent timeout cascades during chat sessions.
+* Container Orchestration: All backend services facilitating customer interactions must be containerized via Docker for immediate failover, guaranteeing zero downtime during the current deployment sprint ending August 04, 2026.
