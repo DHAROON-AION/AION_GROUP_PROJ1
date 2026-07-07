@@ -1,0 +1,17 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# regulatory_alignment: SAMA_E_Money_Rules
+# last_updated: 2026-05-30
+
+## 1. Prepaid Card Characteristics
+Prepaid cards are strictly pay-as-you-go instruments. They are not linked directly to a depository checking account and offer zero overdraft or credit facilities.
+
+* Maximum Load Balance: The total stored value on a prepaid card cannot exceed 10,000 SAR at any given time.
+* Monthly Reload Limit: Capped at 20,000 SAR per calendar month.
+* Minimum Reload Amount: 50 SAR per transaction.
+
+## 2. KYC and Issuance Restrictions
+* Even though prepaid cards do not offer credit, full KYC (Know Your Customer) identity verification via the national ID registry is legally mandated prior to issuance.
+* Anonymous or "bearer" prepaid cards are strictly prohibited under national anti-money laundering frameworks.
+* Users may maintain a maximum of two active prepaid cards per CIF (Customer Information File).
