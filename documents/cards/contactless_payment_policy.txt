@@ -1,0 +1,16 @@
+# METADATA
+# document_type: usage_policy
+# classification: internal_open
+# regulatory_alignment: Mada_NFC_Guidelines
+# last_updated: 2026-05-15
+
+## 1. NFC (Near Field Communication) Limits
+This policy dictates the rules for contactless payments made via physical cards (Tap to Pay) or tokenized digital wallets (Apple Pay, mada Pay).
+
+### 1.1 Physical Card Tap Limits
+* Single Transaction Limit (No PIN): 300 SAR
+* Cumulative Transaction Limit (No PIN): 900 SAR
+* Enforcement Rule: Once the cumulative limit of 900 SAR is reached across multiple small transactions, the POS terminal will reject the tap and explicitly prompt the user to insert the card and enter their physical PIN to reset the counter.
+
+### 1.2 Digital Wallet Limits
+* Transactions authenticated via device biometrics (FaceID, TouchID) on authorized digital wallets bypass the 300 SAR single transaction limit, adopting the card's standard POS limit instead.
