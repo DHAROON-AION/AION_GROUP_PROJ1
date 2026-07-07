@@ -1,0 +1,14 @@
+# METADATA
+# document_type: dispute_resolution_guide
+# classification: internal_open
+# regulatory_alignment: SAMA_Payment_Systems
+# last_updated: 2026-07-01
+
+## 1. Local Transfer Rejections (SARIE / IPS)
+When a domestic inter-bank transfer fails, the Python backend parser will return one of the following specific error codes to the AION terminal:
+* Error R01 (Invalid Account/IBAN): The destination account is closed, frozen, or the IBAN is mistyped. Funds are instantly reversed to the sender's available balance.
+* Error R03 (Beneficiary Name Mismatch): The provided beneficiary name significantly deviates from the name registered to the destination IBAN. Funds are held in a suspense account and reversed within 24 hours.
+
+## 2. International Transfer (SWIFT) Rejections
+* Tracing: If an international transfer does not reach the beneficiary within 5 business days, the agent must initiate a SWIFT MT199 tracing message.
+* Rejection Processing: Returned SWIFT transfers are credited back to the customer's account minus the correspondent banking fees and foreign exchange margin. The bank does not refund FX losses on rejected international wires.
