@@ -1,0 +1,16 @@
+# METADATA
+# document_type: security_protocol
+# classification: internal_restricted
+# regulatory_alignment: SAMA_Cybersecurity_Framework
+# last_updated: 2026-06-22
+
+## 1. Biometric Authentication Standards
+The self-hosted mobile banking application utilizes the device's native hardware secure enclave for biometric verification. The bank's servers never receive or store the actual biometric data (fingerprint or facial mesh).
+
+* Supported Modalities: Apple FaceID, Apple TouchID, Android Biometric Prompt API (Class 3 Strong Biometrics only).
+* Fallback Mechanism: If a biometric scan fails three consecutive times, the app automatically reverts to requiring the complex alphanumeric password and an SMS OTP.
+
+## 2. Lifecycle and Revocation
+* Device Linkage: Biometric login is bound to a single, specific hardware device ID.
+* Re-registration Triggers: Biometric access is immediately revoked and must be re-registered if the user alters the biometric profiles on their device OS (e.g., adds a new fingerprint to the phone) or if the app remains unused for 90 days.
+* High-Risk Transactions: Biometrics can be used for initial login, but adding a new international beneficiary requires step-up authentication via a time-based token (TOTP).
