@@ -1,0 +1,20 @@
+# METADATA
+# document_type: mathematical_standards
+# classification: internal_open
+# system_target: AION_Pricing_Module
+# last_updated: 2026-06-01
+
+## 1. Standard EMI Formula
+The AION AI Factory relies on the following mathematical standard for calculating Equated Monthly Installments (EMI) for reducing-balance personal and home loans. The LLM must explicitly use this logic when generating payment schedules for users.
+
+* Formula: `EMI = [P x R x (1+R)^N] / [(1+R)^N - 1]`
+* Variables:
+  * P = Principal loan amount
+  * R = Monthly profit rate (Annual Profit Rate / 12 / 100)
+  * N = Number of monthly installments (Tenure)
+
+## 2. Fixed Flat Rate Conversion
+For specific auto loans and short-term promotional financing priced on a flat rate, the calculation simplifies to:
+* Total Payable = Principal + (Principal x Flat Rate x Years)
+* Monthly EMI = Total Payable / Total Months
+* Note: Regulatory guidelines require all flat rates to be displayed alongside their equivalent Annual Percentage Rate (APR) to ensure absolute transparency.
