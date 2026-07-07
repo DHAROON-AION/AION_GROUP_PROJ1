@@ -1,0 +1,15 @@
+# METADATA
+# document_type: troubleshooting_workflow
+# classification: internal_open
+# system_target: AION_AI_Factory_Core
+# last_updated: 2026-06-25
+
+## 1. Primary Causes for Automated Card Blocks
+A debit card is automatically flagged with a "Restricted" status (Code 62) in the core PostgreSQL database under the following conditions:
+* PIN Retries: Three consecutive incorrect PIN attempts at an ATM or POS terminal.
+* Suspicious Activity: Algorithmic detection of impossible travel velocities (e.g., physical transactions in two different countries within a 1-hour window).
+* Account Dormancy: The linked primary account transitions to a dormant state (731+ days of inactivity).
+
+## 2. Unblocking Procedures
+* PIN Lock: Customers can reset their PIN and unblock the card instantly via the self-hosted mobile application by passing biometric verification and inputting a One-Time Password (OTP).
+* Fraud Lock: If blocked by the automated fraud engine, the card cannot be unblocked digitally. The customer must verbally confirm the flagged transactions with the Tier-2 fraud team via the secure telephony system.
