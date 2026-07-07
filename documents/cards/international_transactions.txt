@@ -1,0 +1,16 @@
+# METADATA
+# document_type: security_and_limits
+# classification: internal_restricted
+# system_target: pgvector_fraud_rules_db
+# last_updated: 2026-07-03
+
+## 1. Cross-Border Authorizations
+To mitigate international fraud exposure, all physical debit and credit cards are restricted to domestic (Saudi Arabia) use by default upon issuance. 
+
+* Customer Activation: Users must explicitly enable "International Travel Mode" via the digital banking portal before traveling.
+* Duration: Travel mode can be activated for a maximum rolling window of 90 days, after which it automatically disables.
+
+## 2. Geographic Blocklists
+* Transactions originating from countries designated as high-risk by national AML authorities are automatically declined.
+* The local on-premise PostgreSQL database maintains the dynamic list of blocked Merchant Category Codes (MCCs) and country IP ranges. Any RAG query determining transaction validity must cross-reference this local table.
+* Under no circumstances can a frontline support agent override a national geographic blocklist.
