@@ -1,0 +1,15 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# last_updated: 2026-05-20
+
+## 1. Issuance Criteria
+Cheque books are strictly issued to Current Account holders. Savings accounts are ineligible for cheque book facilities.
+* First Issuance: A standard 10-leaf cheque book is issued free of charge upon account opening if requested.
+* Subsequent Requests: 25 SAR per 25-leaf book for Standard Tier customers. The fee is waived for Premium and VIP customers.
+* Restrictions: Accounts with a history of two or more returned (bounced) cheques due to insufficient funds within a 12-month period are permanently barred from requesting new cheque books.
+
+## 2. Stop Payment Orders
+Customers may issue a "Stop Payment" on a specific cheque or range of cheques via the mobile app or branch.
+* Fee: 50 SAR per stop payment request.
+* Validity: The stop payment mandate is active in the core system for 180 days.
