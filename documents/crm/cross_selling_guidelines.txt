@@ -1,0 +1,16 @@
+# METADATA
+# document_type: commercial_guidelines
+# classification: internal_restricted
+# regulatory_alignment: Consumer_Protection_Framework
+# last_updated: 2026-06-18
+
+## 1. Ethical Cross-Selling Framework
+Cross-selling initiatives must be strictly data-driven and aligned with the customer's actual financial health. Products must never be pushed to inflate team metrics if they increase the customer's risk of financial distress.
+
+### 1.1 Trigger-Based Eligibility Logic
+* Credit Card Offers: Only eligible if the customer's current Debt Burden Ratio (DBR) is below 33% and they have maintained a clean payment record for 6 consecutive months.
+* Personal Loan Top-Ups: Programmatically triggered when a customer has successfully paid down 50% of their principal loan balance without a single delinquency event.
+
+## 2. Prohibited Cross-Selling Practices
+* Forced Bundling: Tying the approval of a core product (e.g., a home loan) to the mandatory purchase of an unrelated secondary product (e.g., a high-tier credit card) is explicitly illegal.
+* Pre-Checked Consent: Digital interfaces built on local stacks must never use pre-checked boxes for opting into paid add-on services or insurances. Consent must be explicitly checked by the user.
