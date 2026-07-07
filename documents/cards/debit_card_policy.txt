@@ -1,0 +1,14 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# last_updated: 2026-05-18
+
+## 1. Issuance and Linkage
+* Every active Current and Savings Account is entitled to one primary Mada/Visa debit card at no initial issuance cost.
+* A single debit card can be linked to a maximum of three internal accounts (e.g., one primary SAR account, one secondary USD account, one savings account).
+* The primary account used for POS and ATM settlements can be dynamically switched by the user via the self-hosted mobile application interface.
+
+## 2. Renewal Protocol
+* Cards are valid for a period of 5 years from the date of issue.
+* Automated renewal is triggered 45 days prior to the expiration date printed on the card.
+* If an account is classified as "Dormant" (no customer-initiated transactions for 24 months), the automated renewal process is suspended.
