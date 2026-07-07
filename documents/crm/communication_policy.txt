@@ -1,0 +1,19 @@
+# METADATA
+# document_type: compliance_policy
+# classification: internal_restricted
+# regulatory_alignment: PDPL_Data_Privacy
+# last_updated: 2026-06-05
+
+## 1. Approved Communication Channels
+To protect customer confidentiality and prevent the unauthorized dissemination of personally identifiable information (PII), bank personnel are strictly limited to the following approved communication platforms:
+
+* Official Bank Email Subsystems (Encrypted internal network only)
+* Core Banking CRM Secure Messaging Portal
+* Verified SMS Gateway for Transactional Alerts (No marketing or conversational SMS allowed)
+* Recorded Centralized Telephony System
+
+## 2. Prohibited Communication Practices
+The use of third-party, commercial, or unmonitored communication platforms to discuss any bank-related business, share code, or transmit customer data is an immediate terminable offense.
+
+* Prohibited Applications: WhatsApp, Telegram, personal email accounts (Gmail, Yahoo), and public cloud file-sharing services.
+* Development & Testing: Engineers and developers must never use live customer data when testing the prompt routing or backend Python logic. All test datasets must be thoroughly synthesized and anonymized before being loaded into the local development environments.
