@@ -1,0 +1,39 @@
+# METADATA
+# document_type: policy_and_limits
+# classification: internal_restricted
+# regulatory_alignment: SAMA_Banking_Rules
+# last_updated: 2026-06-15
+
+## 1. Daily Transaction Limits by Channel
+The following limits define the maximum allowable cumulative transfer amounts within a rolling 24-hour window per customer account tier.
+
+### 1.1 Retail Standard Tier
+* Internet Banking Daily Limit: 50,000 SAR
+* Mobile Banking Daily Limit: 50,000 SAR
+* ATM Transfer Daily Limit: 20,000 SAR
+* QR Code Payment Daily Limit: 10,000 SAR
+
+### 1.2 Retail Premium/VIP Tier
+* Internet Banking Daily Limit: 200,000 SAR
+* Mobile Banking Daily Limit: 200,000 SAR
+* ATM Transfer Daily Limit: 50,000 SAR
+* QR Code Payment Daily Limit: 30,000 SAR
+
+---
+
+## 2. Limits by Transfer Type (Standard Accounts)
+Regardless of the digital channel used, individual transaction caps apply based on the relationship type of the destination account.
+
+* Intra-Bank Transfer (Own Accounts): Unlimited
+* Intra-Bank Transfer (Third-Party): 100,000 SAR per transaction
+* Local Inter-Bank Transfer (Instant / IPS): 20,000 SAR per transaction
+* Local Inter-Bank Transfer (Standard SARIE): 50,000 SAR per transaction
+* International SWIFT Transfer: 25,000 SAR equivalent per transaction
+
+---
+
+## 3. Temporary Limit Enhancements
+Customers may temporarily elevate their daily transfer limits via the mobile application or internet banking portal subject to the following criteria:
+* Maximum temporary elevation cap: 150% of standard tier limits.
+* Validity window: Maximum of 48 hours from the time of approval.
+* Authentication requirement: Mandatory completion of Biometric Verification combined with a time-based One-Time Password (TOTP).
