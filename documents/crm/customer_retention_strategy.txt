@@ -1,0 +1,20 @@
+# METADATA
+# document_type: strategic_playbook
+# classification: internal_restricted
+# regulatory_alignment: Retail_Banking_Retention
+# last_updated: 2026-06-11
+
+## 1. Attrition Risk Identification
+The local analytical pipeline calculates an Attrition Risk Score weekly based on transaction velocity drops, total balance drawdowns exceeding 40%, or repeated visits to the "Account Closure" FAQ page on the internet banking platform.
+
+## 2. Retention Concession Matrix
+When a high-value customer initiates a closure request, relationship managers are authorized to offer a tiered set of concessions to retain the account.
+
+| Customer Tier | Authorized Concession Option A | Authorized Concession Option B |
+| :--- | :--- | :--- |
+| **Standard Tier** | Waiver of account maintenance fee for 12 months | 50% discount on next checkbook issuance |
+| **Premium Tier** | Full waiver of credit card annual fee | Complimentary domestic lounge access pass |
+| **VIP Tier** | Preferential +0.25% yield on short-term deposits | Dedicated wealth advisory sessions waived |
+
+### 2.1 Final Clause
+Concessions must be logged directly into the CRM case file, and the local system must automatically audit the account's behavior 90 days post-retention to verify strategy efficacy.
