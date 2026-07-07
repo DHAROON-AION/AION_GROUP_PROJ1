@@ -1,0 +1,15 @@
+# METADATA
+# document_type: service_guidelines
+# classification: internal_open
+# system_target: SADAD_Integration_API
+# last_updated: 2026-06-10
+
+## 1. Supported Utility & Government Payments
+The digital banking platform integrates directly with the SADAD national payment network to process immediate bill settlements.
+* Supported Categories: Telecommunications (STC, Mobily, Zain), Utilities (Saudi Electricity Company, National Water Company), Government Services (Absher, Traffic Violations, Passports), and approved Educational Institutions.
+* Biller Registration: Customers must register a biller using the unique Biller Code and their specific Subscriber/Account Number prior to making a payment.
+
+## 2. Payment Processing and Limits
+* Cut-off Times: SADAD payments are processed 24/7. However, payments made between 11:30 PM and 12:30 AM AST may experience delayed reflection on the utility provider's portal due to end-of-day batch reconciliation.
+* Daily Limit: The maximum cumulative limit for SADAD bill payments is 50,000 SAR per day for Standard Tier accounts and 150,000 SAR for Premium/VIP accounts.
+* Auto-Pay: Users can configure recurring scheduled payments. The core system will attempt to debit the account 3 days prior to the bill's due date. If funds are insufficient, the auto-pay mandate will fail and notify the user via a local push notification.
