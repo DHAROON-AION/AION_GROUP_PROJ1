@@ -1,0 +1,17 @@
+# METADATA
+# document_type: fee_schedule
+# classification: internal_open
+# regulatory_alignment: Retail_Tariff_Guidelines
+# last_updated: 2026-05-10
+
+## 1. Average Monthly Balance (AMB) Thresholds
+The core banking system calculates the AMB at the close of business on the last calendar day of the month by summing the end-of-day balances and dividing by the number of days in the month.
+
+* Standard Current Account AMB: 3,000 SAR minimum.
+* Standard Savings Account AMB: 2,000 SAR minimum.
+* Premium / VIP Accounts: AMB tracked at the portfolio level; distinct minimums detailed in customer tier policies.
+
+## 2. Fall-Below Fees
+* Standard Penalty: If an account falls below the stipulated AMB, a standard fee of 15 SAR (plus 15% VAT) is automatically debited on the 1st of the following month.
+* Exemption 1: Accounts actively receiving monthly salary transfers via the SARIE payroll system are entirely exempt from AMB rules and fall-below fees.
+* Exemption 2: Student accounts (ages 18-24 with valid university IDs) are permanently exempt from AMB requirements.
