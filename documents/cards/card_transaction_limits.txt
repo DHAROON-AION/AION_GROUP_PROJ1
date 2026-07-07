@@ -1,0 +1,22 @@
+# METADATA
+# document_type: limits_and_thresholds
+# classification: internal_open
+# regulatory_alignment: SAMA_Card_Issuance_Rules
+# last_updated: 2026-06-01
+
+## 1. Debit Card Transaction Limits
+The following daily limits apply to standard and premium debit cards linked to current or savings accounts. Limits reset at 00:00 AST daily.
+
+### 1.1 Standard Debit Card (Mada / Visa)
+* ATM Daily Cash Withdrawal Limit: 5,000 SAR
+* Point of Sale (POS) Daily Limit: 20,000 SAR
+* E-Commerce Daily Limit: 20,000 SAR (Requires manual activation via the app)
+
+### 1.2 Premium/VIP Debit Card (Visa Infinite / Mastercard World)
+* ATM Daily Cash Withdrawal Limit: 20,000 SAR (Subject to branch liquidity rules)
+* Point of Sale (POS) Daily Limit: 200,000 SAR
+* E-Commerce Daily Limit: 100,000 SAR
+
+## 2. Limit Modification Rules
+* POS and E-commerce limits can be reduced to 0 SAR by the user via the mobile app for immediate security.
+* ATM withdrawal limits cannot exceed 5,000 SAR for Standard Tier accounts under any circumstances without physical branch override and dual biometric authentication.
