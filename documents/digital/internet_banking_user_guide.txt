@@ -1,0 +1,16 @@
+# METADATA
+# document_type: user_documentation
+# classification: internal_open
+# target_audience: AION_Conversational_Agent
+# last_updated: 2026-05-30
+
+## 1. Navigation and Dashboard Overview
+This document provides the UI mapping logic for the LangChain agent to guide customers through the web portal.
+
+* Account Summary: Located on the primary landing dashboard. Displays aggregated balances across Current, Savings, and Loan accounts.
+* E-Statements: Accessible via `Main Menu > Document Center > Account Statements`. Users can filter by date range and download encrypted PDFs locally.
+* Beneficiary Management: Accessible via `Main Menu > Transfers > Manage Beneficiaries`. Allows adding, editing, or deleting trusted IBANs.
+
+## 2. Common Task Workflows
+* Updating KYC/ID Expiry: Navigate to `Settings > Profile Management > Identity Documents`. The user will be redirected to the National Single Sign-On gateway to authorize the data sync.
+* Applying for a Credit Card: Navigate to `Products > Cards > Apply Now`. The system will automatically calculate preliminary eligibility based on the user's localized pgvector risk profile.
