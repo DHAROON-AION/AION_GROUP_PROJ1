@@ -1,0 +1,17 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_restricted
+# regulatory_alignment: SAMA_Dormancy_Rules
+# last_updated: 2026-06-02
+
+## 1. Dormancy Triggers
+An account status changes programmatically based on inactivity timelines. Inactivity is defined as the absence of any customer-initiated financial transactions (withdrawals, deposits, transfers).
+* Active: 0 to 180 days of inactivity.
+* Inactive: 181 to 730 days (24 months) of inactivity. Debit cards are temporarily suspended.
+* Dormant: 731+ days of inactivity. The account is frozen. No outward transactions are permitted, and all linked digital access is revoked.
+
+## 2. Reactivation Process
+To reactivate a Dormant account, the customer must physically visit a branch.
+* The branch agent must verify the customer's identity via biometric fingerprint scanning.
+* The customer must submit a signed "Account Reactivation Request" form.
+* The local system will trigger a mandatory refresh of the customer's KYC data before unfreezing the account ledger.
