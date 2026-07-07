@@ -1,0 +1,17 @@
+# METADATA
+# document_type: dispute_resolution_guide
+# classification: internal_open
+# regulatory_alignment: Consumer_Credit_Protection
+# last_updated: 2026-06-21
+
+## 1. Valid Chargeback Conditions
+A customer can initiate a formal chargeback process if the transaction meets one of the following conditions:
+* Billed for a canceled subscription (Requires proof of cancellation notice provided to merchant).
+* Goods/services not delivered by the promised date.
+* Billed amount differs significantly from the receipt/invoice (Overcharge).
+* Defective or counterfeit merchandise received.
+
+## 2. Chargeback Processing Rules
+* Time Limit: Chargeback claims must be submitted within 120 days of the transaction settlement date.
+* Document Requirement: Customers must upload supporting evidence (receipts, merchant correspondence) directly into the secure app environment.
+* Interest Suspension: Once a dispute is successfully logged, the core billing system automatically pauses interest accumulation on the disputed amount until the investigation concludes.
