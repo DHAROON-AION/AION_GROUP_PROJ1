@@ -1,0 +1,22 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_confidential
+# regulatory_alignment: Consumer_Protection_Principles
+# last_updated: 2026-05-10
+
+## 1. Multi-Tiered Resolution Matrix
+All formal complaints, whether ingested via text, voice, or in-branch submission, follow a strict chronological escalation path to ensure regulatory compliance and fair customer treatment.
+
+### Level 1: Initial Ingestion and Triage (Hours 0 - 24)
+* Actor: First-Line Support / AI Assistant
+* Action: Issue is logged in the CRM. The complaint text is processed using local LangChain pipelines to classify the severity and intent. 
+* Routing Logic: Semantic similarity scoring against historical complaints dictates whether the issue can be auto-resolved (e.g., standard fee reversal) or requires human intervention.
+
+### Level 2: Supervisor Review (Hours 24 - 72)
+* Actor: Department Supervisor / Regional Manager
+* Action: Triggered if Level 1 fails to resolve the issue or if the complaint involves monetary loss exceeding 5,000 SAR, discrimination allegations, or system failures. 
+* Resolution: Supervisor has the authority to grant goodwill credits up to 2,000 SAR without further approval.
+
+### Level 3: Compliance & Legal Escalation (Days 3 - 14)
+* Actor: Central Compliance Office / Dispute Resolution Committee
+* Action: Reserved for regulatory breaches, unresolved fraud claims, or threats of external litigation. Final written response must be delivered to the customer via certified secure communication, citing specific central bank regulations supporting the bank's decision.
