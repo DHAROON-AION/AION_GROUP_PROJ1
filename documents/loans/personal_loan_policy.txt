@@ -1,0 +1,15 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# regulatory_alignment: Consumer_Credit_Regulations
+# last_updated: 2026-06-15
+
+## 1. Product Parameters
+The Personal Finance product is an unsecured cash facility based on the Sharia principle of Tawarruq (Commodity Murabaha).
+* Maximum Tenure: Strictly capped at 60 months (5 years) by central bank mandate. No exceptions.
+* Maximum Financing Amount: Up to 2,500,000 SAR, strictly constrained by the customer's maximum eligible DBR.
+* Profit Rate: Fixed for the entire duration of the tenure. The rate is dynamically assigned during the application based on the customer's risk profile, employer tier, and requested tenure.
+
+## 2. Refinancing and Top-Ups
+* A customer may apply for a "Top-Up" (refinancing the existing loan to extract additional equity) only after successfully paying down 20% of the original principal balance.
+* During a Top-Up, the old contract is closed, early settlement formulas are applied, and a new 60-month contract is generated covering the remaining balance plus the newly requested funds.
