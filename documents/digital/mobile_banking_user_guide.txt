@@ -1,0 +1,16 @@
+# METADATA
+# document_type: user_documentation
+# classification: internal_open
+# target_audience: AION_Conversational_Agent
+# last_updated: 2026-06-15
+
+## 1. Mobile Interface Architecture
+The mobile application features a bottom navigation bar with four primary tabs designed for quick access to frequent functions.
+
+* Home Tab: Quick view of the primary account balance, recent 5 transactions, and one-tap access to the AION AI assistant.
+* Transfers Tab: Consolidates intra-bank, local SARIE, and international SWIFT transfers into a single workflow.
+* Payments Tab: Houses SADAD bill payments, traffic violation settlements, and MOI (Ministry of Interior) fee payments.
+* More Tab: Contains settings, card management (freeze/unfreeze), limits configuration, and biometric toggles.
+
+## 2. Digital Wallet Provisioning
+* Apple Pay / mada Pay Integration: Users can tokenize their active debit or credit cards directly from the `Cards` menu by selecting the specific card and tapping "Add to Wallet." The process is handled securely via the bank's containerized tokenization API without requiring manual card detail entry.
