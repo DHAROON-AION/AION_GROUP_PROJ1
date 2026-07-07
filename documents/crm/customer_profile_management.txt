@@ -1,0 +1,22 @@
+# METADATA
+# document_type: standard_operating_procedure
+# classification: internal_confidential
+# system_target: Core_CRM_Database
+# last_updated: 2026-05-25
+
+## 1. Profile Modification Protocols
+To ensure the integrity of the Customer Information File (CIF), any structural changes to a user's core demographic or regulatory profile must go through local cryptographic dual-authorization.
+
+### 1.1 Non-Critical Field Updates
+The following updates can be performed directly by a frontline agent or through authenticated customer self-service via the local app:
+* Preferred Language
+* Correspondence Email Address
+* Secondary Phone Number
+* Threshold Alert Preferences
+
+### 1.2 Critical Field Updates (Maker-Checker Mandate)
+Modifications to core identities require a "Maker" (the initiating agent or secure automated system) and a "Checker" (a senior compliance officer):
+* Legal Name Changes (Requires updated National ID/Passport verification)
+* Primary Mobile Number (Requires Absher/National Digital SSO confirmation)
+* Registered National Address
+* Income/Salary Group Adjustments
