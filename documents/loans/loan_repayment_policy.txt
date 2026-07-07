@@ -1,0 +1,13 @@
+# METADATA
+# document_type: operational_procedure
+# classification: internal_open
+# system_target: Automated_Clearing_Engine
+# last_updated: 2026-05-30
+
+## 1. Automated EMI Deductions
+* Deduction Schedule: The automated clearing engine sweeps accounts for loan installments on the 27th of each Gregorian month, aligning with the national payroll distribution cycle.
+* Partial Sweeps: If the account balance is insufficient to cover the full Equated Monthly Installment (EMI), the system will sweep whatever available balance exists to minimize the delinquency amount and trigger an "Insufficient Funds" SMS alert.
+
+## 2. Partial and Early Settlement
+* Partial Repayment (Balloon Payment): Customers can make lump-sum payments toward the principal balance. This will result in either a reduction of the remaining loan tenure or a recalculation (lowering) of the future monthly EMI, at the customer's discretion.
+* Early Settlement Fees: In accordance with consumer protection laws, if a customer completely settles the loan before maturity, the bank may only charge an administrative fee equivalent to the profit of the next 3 upcoming months. All remaining unearned profit is waived.
