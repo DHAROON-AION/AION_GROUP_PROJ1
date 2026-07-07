@@ -1,0 +1,19 @@
+# METADATA
+# document_type: product_logic
+# classification: internal_restricted
+# target_audience: Loyalty_Engine
+# last_updated: 2026-06-10
+
+## 1. Accrual Rates for Cashback Credit Cards
+The automated loyalty engine calculates cashback daily and posts the accumulated total on the billing cycle date. Accrual rates are mapped to specific Merchant Category Codes (MCC).
+
+* Supermarkets & Groceries (MCC 5411): 2.0% Cashback
+* Fuel & Gas Stations (MCC 5541, 5542): 1.5% Cashback
+* International E-Commerce (Non-SAR currency): 1.0% Cashback
+* All other domestic retail spend: 0.5% Cashback
+* Exclusions: Utility bill payments (SADAD), government fees, cash advances, and crypto-currency purchases accrue 0.0% cashback.
+
+## 2. Redemption Rules
+* Minimum Redemption Threshold: 100 SAR.
+* Maximum Monthly Cap: 1,500 SAR per billing cycle.
+* Cash is credited directly to the card's outstanding statement balance; it cannot be transferred to a current or savings account.
