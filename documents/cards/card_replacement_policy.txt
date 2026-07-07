@@ -1,0 +1,18 @@
+# METADATA
+# document_type: fee_schedule_and_SLA
+# classification: internal_open
+# last_updated: 2026-05-28
+
+## 1. Card Replacement Fees
+Fees for replacing lost, stolen, or physically damaged cards apply based on the customer tier. Expired cards are replaced automatically at no charge.
+
+* Standard Tier: 35 SAR (Exclusive of 15% VAT).
+* Premium Tier: 0 SAR (Fee waived automatically by billing system).
+* VIP Tier: 0 SAR (Fee waived automatically).
+
+## 2. Issuance and Delivery SLAs
+Customers may choose between physical delivery or self-service printing.
+
+* Self-Service Kiosk: Immediate issuance. Customer must authenticate via National ID and fingerprint biometrics at the terminal.
+* Courier Delivery (Domestic): 3 to 5 business days. Dispatched only to the verified National Address on file.
+* Courier Delivery (International): Reserved for VIP tier only. Expedited global shipping via DHL within 4 to 7 business days.
