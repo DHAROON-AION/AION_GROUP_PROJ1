@@ -1,0 +1,21 @@
+# METADATA
+# document_type: dispute_resolution_guide
+# classification: internal_open
+# regulatory_alignment: Consumer_Protection_Principles
+# last_updated: 2026-04-12
+
+## 1. Immediate Triage & Card Freeze Actions
+When a customer contacts support or inputs a claim via the chatbot regarding an unrecognized or unauthorized debit from their account, the agent/system must execute the following sequence:
+
+### Step 1: Immediate Token Deactivation
+Instantly block the associated debit card, credit card, or digital wallet token tokenized on the mobile app. 
+
+### Step 2: Session Invalidation
+Force-terminate all active internet banking sessions and mobile applications linked to the customer's unique CIF number to halt further exploit capabilities.
+
+---
+
+## 2. Dispute Logging and Provisional Credit Rules
+* Timeline to file: Customers must report unauthorized transactions within 45 days of the statement issue date.
+* Dispute Investigation Window: Standard investigations must be finalized within 14 business days.
+* Provisional Credit: For transactions exceeding 1,000 SAR where fraud is highly probable and no gross negligence (e.g., sharing PIN or OTP) is detected on the customer's part, a temporary provisional credit for the disputed amount must be applied to the account within 48 hours while final analysis finishes.
