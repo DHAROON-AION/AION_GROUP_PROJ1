@@ -1,0 +1,16 @@
+# METADATA
+# document_type: product_governance
+# classification: internal_open
+# regulatory_alignment: Real_Estate_Development_Fund
+# last_updated: 2026-06-30
+
+## 1. Mortgage Financing Rules
+The bank offers Murabaha and Ijarah real estate financing for ready properties and off-plan units approved by the Wafi program.
+* Maximum Tenure: 300 months (25 years).
+* Maximum Financing Limit: 5,000,000 SAR.
+* Age Restriction: The customer's age at the maturity of the loan cannot exceed 65 years for standard employees, or 70 years for military and government personnel.
+* Repayment Cap: The EMI cannot exceed 60% of the customer's net verified monthly income.
+
+## 2. Joint Financing
+* First-degree relatives (spouses, parents, children) can apply as co-applicants to pool their income and increase the maximum financing limit.
+* In joint financing, a mandatory life insurance policy is issued for both applicants, prorated based on their income contribution percentage.
