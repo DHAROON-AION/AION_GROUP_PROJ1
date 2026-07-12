@@ -105,8 +105,8 @@ def init_db():
     """Creates all tables defined in Base."""
     Base.metadata.create_all(bind=engine)
 
-def get_db():
-    """Dependency for FastAPI endpoints."""
+def get_session():
+    """Dependency for FastAPI endpoints (SQLAlchemy session)."""
     db = SessionLocal()
     try:
         yield db
